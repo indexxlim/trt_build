@@ -40,6 +40,7 @@ from NNDF.logger import G_LOGGER
 # Used for HuggingFace setting random seed
 RANDOM_SEED = 42
 
+
 # Networks #
 def register_network_folders(
     root_dir: str, config_file_str: str = "*Config.py"
@@ -51,7 +52,9 @@ def register_network_folders(
     return networks
 
 
-def process_results(category: List[str], results: List[NetworkResult], nconfig: NNConfig):
+def process_results(
+    category: List[str], results: List[NetworkResult], nconfig: NNConfig
+):
     """
     Calculate and process results across multiple runs.
     """
@@ -79,29 +82,36 @@ def process_results(category: List[str], results: List[NetworkResult], nconfig: 
     headers = general_stats + [r + " (sec)" for r in runtime_result_row_names]
     return headers, rows
 
-def process_per_result_entries(script_category: List[str], results: List[NetworkResult], max_output_char:int = 30):
+
+def process_per_result_entries(
+    script_category: List[str], results: List[NetworkResult], max_output_char: int = 30
+):
     """Prints tabulations for each entry returned by the runtime result."""
+
     def _shorten_text(w):
         l = len(w)
         if l > max_output_char:
-            return w[0:max_output_char // 2] + " ... " + w[-max_output_char//2:]
+            return w[0 : max_output_char // 2] + " ... " + w[-max_output_char // 2 :]
         return w
 
     headers = ["script", "network_part", "accuracy", "runtime", "input", "output"]
     row_data_by_input = defaultdict(list)
     for cat, result in zip(script_category, results):
         for nr in result.network_results:
-            for runtime in  nr.median_runtime:
-                row_data_by_input[hash(nr.input)].append([
-                    cat,
-                    runtime.name,
-                    result.accuracy,
-                    runtime.runtime,
-                    _shorten_text(nr.input),
-                    _shorten_text(nr.semantic_output)
-                ])
+            for runtime in nr.median_runtime:
+                row_data_by_input[hash(nr.input)].append(
+                    [
+                        cat,
+                        runtime.name,
+                        result.accuracy,
+                        runtime.runtime,
+                        _shorten_text(nr.input),
+                        _shorten_text(nr.semantic_output),
+                    ]
+                )
 
     return headers, dict(row_data_by_input)
+
 
 # IO #
 def confirm_folder_delete(
@@ -196,7 +206,10 @@ def measure_python_inference_code(
     results = []
     start_time = datetime.now()
     iter_idx = 0
-    while iter_idx < iterations or (datetime.now() - start_time).total_seconds() < duration:
+    while (
+        iter_idx < iterations
+        or (datetime.now() - start_time).total_seconds() < duration
+    ):
         iter_idx += 1
         results.append(timeit.timeit(stmt, number=number))
 
@@ -204,6 +217,7 @@ def measure_python_inference_code(
         return simple_percentile(results, percentile) / number
     else:
         return [simple_percentile(results, p) / number for p in percentile]
+
 
 class NNFolderWorkspace:
     """
@@ -221,9 +235,9 @@ class NNFolderWorkspace:
         os.makedirs(self.dpath, exist_ok=True)
 
     def set_model_path(self, metadata_serialized, is_encoder_decoder: bool) -> str:
-        '''
+        """
         Create subdirectory for models with different config(e.g. kv cache)
-        '''
+        """
         self.model_path = os.path.join(self.dpath, metadata_serialized)
         self.decoder_path = os.path.join(self.model_path, "decoder")
         os.makedirs(self.decoder_path, exist_ok=True)
@@ -262,9 +276,9 @@ class NNFolderWorkspace:
             return self.decoder_kv_path, self.decoder_non_kv_path
 
     def cleanup(self, force_remove: bool = False) -> None:
-        '''
+        """
         Cleanup would remove all the contents in the workspace.
-        '''
+        """
         if force_remove:
             return shutil.rmtree(self.dpath)
 
@@ -272,15 +286,9 @@ class NNFolderWorkspace:
             if self.encoder_path is not None:
                 remove_if_empty(self.encoder_path)
             if self.metadata.other.kv_cache:
-                remove_if_empty(
-                    self.decoder_kv_path
-                )
-                remove_if_empty(
-                    self.decoder_non_kv_path
-                )
-            remove_if_empty(
-                self.decoder_path
-            )
+                remove_if_empty(self.decoder_kv_path)
+                remove_if_empty(self.decoder_non_kv_path)
+            remove_if_empty(self.decoder_path)
 
         remove_if_empty(self.model_path)
         remove_if_empty(self.dpath)
