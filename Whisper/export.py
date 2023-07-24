@@ -134,7 +134,7 @@ class WhisperDecoderTorchFile(TorchModelFile):
             # HuggingFace's beam search requires to set self.device. Set it to avoid application crash
             self.device = torch.device("cuda")
             # Use hardcoded value to extend compatibility with older HF versions.
-            self.main_input_name = "input_ids"
+            self.main_input_name = "input_features"
             # trt uses cached and precomputed cross attention vs. framework uses the entire kv cache as output. Need to treat them differently.
             self.is_trt = is_trt
 
@@ -147,7 +147,7 @@ class WhisperDecoderTorchFile(TorchModelFile):
 
             return {
                 "input_ids": input_ids,
-                "encoder_hidden_states": kwargs["encoder_outputs"].last_hidden_state,
+                "encoder_hidden_states": kwargs["encoder_outputs"],
                 "use_cache": use_cache,
                 "past_key_values": past,
             }
@@ -330,7 +330,7 @@ class WhisperDecoderConverter(ModelFileConverter):
         simplified_encoder = WhisperEncoderTorchFile.TorchModule(model.model.encoder)
         # Exports to ONNX
         decoder_with_lm_head = WhisperDecoderTorchFile.TorchModule(
-            model.model.decoder, model.model.proj_out, model.config, is_trt=True
+            model.model.decoder, model.proj_out, model.config, is_trt=True
         )
 
         inputs = WhisperModelTRTConfig.get_input_dims(network_metadata)["decoder"]

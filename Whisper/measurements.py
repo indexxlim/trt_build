@@ -16,8 +16,9 @@
 #
 
 """
-Utils specific to T5 network.
+Utils specific to Whisper network.
 """
+from types import MethodType
 
 # torch
 import torch
@@ -29,9 +30,16 @@ from NNDF.tensorrt_utils import TRTNativeRunner
 from NNDF.logger import G_LOGGER
 from transformers.modeling_outputs import BaseModelOutput
 
+
 @use_cuda
 def decoder_inference(
-    t5_decoder, input_ids, encoder_last_hidden_state, timing_profile, use_cuda=True, use_cache=False, past_key_values=None
+    t5_decoder,
+    input_ids,
+    encoder_last_hidden_state,
+    timing_profile,
+    use_cuda=True,
+    use_cache=False,
+    past_key_values=None,
 ):
     # This implementation is a bit ugly. Moving implementation of the model to check HFRunner would be cleaner.
     if isinstance(t5_decoder, TRTNativeRunner):
@@ -41,8 +49,10 @@ def decoder_inference(
 
     def decoder_stmt():
         t5_decoder(
-            input_ids=input_ids, encoder_hidden_states=encoder_last_hidden_state, use_cache=use_cache,
-            past_key_values=past_key_values
+            input_ids=input_ids,
+            encoder_hidden_states=encoder_last_hidden_state,
+            use_cache=use_cache,
+            past_key_values=past_key_values,
         )
 
     decoder_e2e_time = measure_python_inference_code(decoder_stmt, timing_profile)
@@ -51,17 +61,18 @@ def decoder_inference(
 
 
 @use_cuda
-def encoder_inference(t5_encoder, input_ids, timing_profile, use_cuda=True):
-    encoder_stmt = lambda: t5_encoder(input_ids=input_ids)
+def encoder_inference(whisper_encoder, input_features, timing_profile, use_cuda=True):
+    encoder_stmt = lambda: whisper_encoder(input_features=input_features)
     encoder_e2e_time = measure_python_inference_code(encoder_stmt, timing_profile)
 
     return (encoder_stmt(), encoder_e2e_time)
 
+
 @use_cuda
 def full_inference(
-    t5_encoder,
-    t5_decoder,
-    input_ids,
+    whisper_encoder,
+    whisper_decoder,
+    input_features,
     tokenizer,
     timing_profile,
     max_length,
@@ -70,35 +81,39 @@ def full_inference(
     batch_size=1,
     use_cuda=True,
     early_stopping=True,
-    use_cache=False
+    use_cache=False,
 ):
-
     G_LOGGER.info(f"Running full inference...")
-    encoder_last_hidden_state = t5_encoder(input_ids=input_ids)
+
+    # encoder_last_hidden_state = whisper_encoder(input_features=input_features)
+    def get_encoder(self):
+        return whisper_encoder
+
+    whisper_decoder.get_encoder = MethodType(get_encoder, whisper_decoder)
 
     def _e2e():
         with torch.no_grad():
-            decoder_output = t5_decoder.generate(
-                input_ids,
-                max_length = max_length,
-                min_length = min_length,
-                num_beams = num_beams,
-                early_stopping = early_stopping,
-                eos_token_id = t5_decoder.config.eos_token_id,
-                pad_token_id = t5_decoder.config.pad_token_id,
-                use_cache = use_cache,
-                encoder_outputs = BaseModelOutput(last_hidden_state = encoder_last_hidden_state),
+            decoder_output = whisper_decoder.generate(
+                input_features,
+                max_length=max_length,
+                min_length=min_length,
+                num_beams=num_beams,
+                early_stopping=early_stopping,
+                eos_token_id=whisper_decoder.config.eos_token_id,
+                pad_token_id=whisper_decoder.config.pad_token_id,
+                use_cache=use_cache,
             )
         return decoder_output
-    
-    if isinstance(t5_decoder, TRTNativeRunner):
-        t5_decoder.set_return_device("cuda" if use_cuda else "cpu")
+
+    if isinstance(whisper_decoder, TRTNativeRunner):
+        whisper_decoder.set_return_device("cuda" if use_cuda else "cpu")
 
     measurement_function = _e2e
 
     full_e2e_time = measure_python_inference_code(measurement_function, timing_profile)
 
     return (measurement_function(), full_e2e_time)
+
 
 @use_cuda
 def calculate_perplexity(
@@ -129,7 +144,9 @@ def calculate_perplexity(
     with torch.no_grad():
         if max_seq_len is not None:
             decoder_input_ids_padded = decoder_input_ids_padded[:, :max_seq_len]
-        logits = t5_decoder(decoder_input_ids_padded, encoder_last_hidden_state, return_dict=True).logits
+        logits = t5_decoder(
+            decoder_input_ids_padded, encoder_last_hidden_state, return_dict=True
+        ).logits
         # Truncate the last prediction
         logits = logits[:, :-1, :]
         loss = torch.nn.CrossEntropyLoss()(logits.permute((0, 2, 1)), decoder_input_ids)

@@ -18,6 +18,7 @@
 """
 Utils specific to T5 network.
 """
+from types import MethodType
 
 # torch
 import torch
@@ -83,7 +84,12 @@ def full_inference(
     use_cache=False,
 ):
     G_LOGGER.info(f"Running full inference...")
-    encoder_last_hidden_state = t5_encoder(input_ids=input_ids)
+
+    # encoder_last_hidden_state = t5_encoder(input_ids=input_ids)
+    def get_encoder(self):
+        return t5_encoder
+
+    t5_decoder.get_encoder = MethodType(get_encoder, t5_decoder)
 
     def _e2e():
         with torch.no_grad():
@@ -96,9 +102,9 @@ def full_inference(
                 eos_token_id=t5_decoder.config.eos_token_id,
                 pad_token_id=t5_decoder.config.pad_token_id,
                 use_cache=use_cache,
-                encoder_outputs=BaseModelOutput(
-                    last_hidden_state=encoder_last_hidden_state
-                ),
+                # encoder_outputs=BaseModelOutput(
+                #     last_hidden_state=encoder_last_hidden_state
+                # ),
             )
         return decoder_output
 

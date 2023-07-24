@@ -54,6 +54,7 @@ from NNDF.models import (
     ModelFileConverter,
 )
 
+
 def add_extra_fp32(network_definition):
     """
     Force operations involved in layer norm to run in FP32 precision.
@@ -61,7 +62,13 @@ def add_extra_fp32(network_definition):
     pow_ops = {}
     for layer_index, layer in enumerate(network_definition[1]):
         if layer.type == trt.LayerType.IDENTITY:
-            all_fp32 = all([layer.output_type_is_set(o) and layer.get_output_type(o) == trt.float32 for o in range(layer.num_outputs)])
+            all_fp32 = all(
+                [
+                    layer.output_type_is_set(o)
+                    and layer.get_output_type(o) == trt.float32
+                    for o in range(layer.num_outputs)
+                ]
+            )
             if all_fp32:
                 if layer.get_input(0).dtype == trt.float32:
                     layer.precision = trt.float32
@@ -78,7 +85,7 @@ def add_extra_fp32(network_definition):
         # Iterate till 10 layers after pow op to include all operations included in layer norm.
         START_OFFSET = 4
         END_OFFSET = 12
-        for i in range(index-START_OFFSET, index+END_OFFSET):
+        for i in range(index - START_OFFSET, index + END_OFFSET):
             l = network_definition[1].get_layer(i)
             if l.type == trt.LayerType.REDUCE:
                 l.precision = trt.float32
@@ -110,6 +117,7 @@ def add_extra_fp32(network_definition):
 
     return network_definition
 
+
 # Torch File Encoding #
 class T5DecoderTorchFile(TorchModelFile):
     class TorchModule(Module, GenerationMixin):
@@ -118,24 +126,20 @@ class T5DecoderTorchFile(TorchModelFile):
         Decoder with lm-head attached.
         """
 
-        def __init__(self, decoder, lm_head, config, is_trt = False):
+        def __init__(self, decoder, lm_head, config, is_trt=False):
             super().__init__()
             self.decoder = decoder
             self.lm_head = lm_head
             self.config = config
             # HuggingFace's beam search requires to set self.device. Set it to avoid application crash
-            self.device = torch.device('cuda')
+            self.device = torch.device("cuda")
             # Use hardcoded value to extend compatibility with older HF versions.
             self.main_input_name = "input_ids"
             # trt uses cached and precomputed cross attention vs. framework uses the entire kv cache as output. Need to treat them differently.
             self.is_trt = is_trt
 
         def prepare_inputs_for_generation(
-            self, 
-            input_ids, 
-            past=None, 
-            use_cache=None, 
-            **kwargs
+            self, input_ids, past=None, use_cache=None, **kwargs
         ):
             # cut decoder_input_ids if past is used
             if past is not None:
@@ -143,18 +147,18 @@ class T5DecoderTorchFile(TorchModelFile):
 
             return {
                 "input_ids": input_ids,
-                "encoder_hidden_states": kwargs["encoder_outputs"].last_hidden_state,
+                "encoder_hidden_states": kwargs["encoder_outputs"],
                 "use_cache": use_cache,
-                "past_key_values": past
+                "past_key_values": past,
             }
 
         def forward(
-            self, 
-            input_ids, 
-            encoder_hidden_states, 
-            use_cache = None, 
-            past_key_values = None,
-            return_dict = None,
+            self,
+            input_ids,
+            encoder_hidden_states,
+            use_cache=None,
+            past_key_values=None,
+            return_dict=None,
             **kwargs,
         ):
             # self.decoder is the HuggingFace t5 decoder
@@ -164,12 +168,12 @@ class T5DecoderTorchFile(TorchModelFile):
                 use_cache=use_cache,
                 past_key_values=past_key_values,
                 return_dict=return_dict,
-                **kwargs
+                **kwargs,
             )
 
             # self.config.d_model ** -0.5 for rescaling output on vocab.
             # as seen in https://huggingface.co/docs/transformers/model_doc/t5#transformers.T5ForConditionalGeneration
-            sequence_output = decoder_outputs[0] * self.config.d_model ** -0.5
+            sequence_output = decoder_outputs[0] * self.config.d_model**-0.5
             logits = self.lm_head(sequence_output)
             if use_cache:
                 if self.is_trt:
@@ -182,43 +186,47 @@ class T5DecoderTorchFile(TorchModelFile):
 
             if not return_dict:
                 return (logits, past_key_values)
-            
-            return Seq2SeqLMOutput(
-                logits=logits, 
-                past_key_values=past_key_values
-            )
+
+            return Seq2SeqLMOutput(logits=logits, past_key_values=past_key_values)
 
     def __init__(self, model, network_metadata):
         super().__init__(model, T5DecoderConverter, network_metadata)
 
+
 class T5DecoderCrossAttentionKVGenerator(Module):
-    def __init__(self, decoder, device = "cpu"):
+    def __init__(self, decoder, device="cpu"):
         super().__init__()
         self.decoder = decoder
         self.device = device
 
     def forward(self, encoder_hidden_states):
-        '''
+        """
         Use same but simplified code as HF modeling_t5.py to generate cross attention kv cache from provided encoder_hidden_states
-        '''
+        """
         present_key_values = ()
         for layer_module in self.decoder.block:
             # hidden_states and position_bias are required for the forward call, but irrelevant of cross attention kv cache calculation, so generate dummy variables
-            dummy_hidden_states = torch.zeros(1,1).to(self.device)
-            dummy_position_bias = torch.zeros(1, layer_module.layer[1].EncDecAttention.n_heads, 1, encoder_hidden_states.shape[1]).to(self.device)
+            dummy_hidden_states = torch.zeros(1, 1).to(self.device)
+            dummy_position_bias = torch.zeros(
+                1,
+                layer_module.layer[1].EncDecAttention.n_heads,
+                1,
+                encoder_hidden_states.shape[1],
+            ).to(self.device)
             cross_attention_outputs = layer_module.layer[1](
-                hidden_states=dummy_hidden_states, 
-                key_value_states=encoder_hidden_states, 
-                use_cache=True, 
+                hidden_states=dummy_hidden_states,
+                key_value_states=encoder_hidden_states,
+                use_cache=True,
                 past_key_value=None,
-                position_bias=dummy_position_bias
+                position_bias=dummy_position_bias,
             )
             present_key_values = present_key_values + cross_attention_outputs[1]
-        
+
         return present_key_values
-    
+
     def __call__(self, *args, **kwargs):
         return self.forward(*args, **kwargs)
+
 
 class T5EncoderTorchFile(TorchModelFile):
     """Creation of a class to output only the last hidden state from the encoder."""
@@ -253,11 +261,11 @@ class T5DecoderONNXFile(ONNXModelFile):
 
 # TRT Engine File Encoding #
 class T5DecoderTRTEngine(TRTEngineFile):
-
     def __init__(self, model, network_metadata):
         super().__init__(model, T5DecoderConverter, network_metadata)
-        self.max_trt_workspace = T5ModelTRTConfig.MAX_DECODER_WORKSPACE_MB[network_metadata.variant]
-        
+        self.max_trt_workspace = T5ModelTRTConfig.MAX_DECODER_WORKSPACE_MB[
+            network_metadata.variant
+        ]
 
     def get_network_definition(self, network_definition):
         if self.network_metadata.precision.fp16:
@@ -270,7 +278,7 @@ class T5DecoderTRTEngine(TRTEngineFile):
                 t = network_definition[1].get_output(i)
                 if t.dtype == trt.float32:
                     t.dtype = trt.float16
-        
+
         return add_extra_fp32(network_definition)
 
     def use_obey_precision_constraints(self):
@@ -278,16 +286,18 @@ class T5DecoderTRTEngine(TRTEngineFile):
 
 
 class T5EncoderTRTEngine(TRTEngineFile):
-
     def __init__(self, model, network_metadata):
         super().__init__(model, T5EncoderConverter, network_metadata)
-        self.max_trt_workspace = T5ModelTRTConfig.MAX_ENCODER_WORKSPACE_MB[network_metadata.variant]
+        self.max_trt_workspace = T5ModelTRTConfig.MAX_ENCODER_WORKSPACE_MB[
+            network_metadata.variant
+        ]
 
     def get_network_definition(self, network_definition):
         return add_extra_fp32(network_definition)
 
     def use_obey_precision_constraints(self):
         return self.network_metadata.precision.fp16
+
 
 # Converters #
 class T5DecoderConverter(ModelFileConverter):
@@ -317,26 +327,30 @@ class T5DecoderConverter(ModelFileConverter):
         simplified_encoder = T5EncoderTorchFile.TorchModule(model.encoder)
         # Exports to ONNX
         decoder_with_lm_head = T5DecoderTorchFile.TorchModule(
-            model.decoder, model.lm_head, model.config, is_trt = True
+            model.decoder, model.lm_head, model.config, is_trt=True
         )
 
         inputs = T5ModelTRTConfig.get_input_dims(network_metadata)["decoder"]
         outputs = T5ModelTRTConfig.get_output_dims(network_metadata)["decoder"]
 
         # Exports to ONNX
-        opt_args={}
+        opt_args = {}
 
-        version_major = int((torch.__version__).split('.')[0])
-        version_minor = int((torch.__version__).split('.')[1])
+        version_major = int((torch.__version__).split(".")[0])
+        version_minor = int((torch.__version__).split(".")[1])
         if version_major < 1 or (version_major == 1 and version_minor < 11):
-            opt_args['use_external_data_format'] = True
+            opt_args["use_external_data_format"] = True
 
         if not network_metadata.other.kv_cache:
             # This code allows for huggingface compatible torch class to use onnx exporter
             old_forward = decoder_with_lm_head.forward
+
             def _export_forward(input_ids, encoder_hidden_states, **kwargs):
-                result = old_forward(input_ids, encoder_hidden_states, use_cache=False, **kwargs)
+                result = old_forward(
+                    input_ids, encoder_hidden_states, use_cache=False, **kwargs
+                )
                 return result[0]
+
             decoder_with_lm_head.forward = _export_forward
 
             torch.onnx.export(
@@ -352,18 +366,30 @@ class T5DecoderConverter(ModelFileConverter):
                     **outputs.get_torch_dynamic_axis_encoding(),
                 },
                 training=torch.onnx.TrainingMode.EVAL,
-                **opt_args
+                **opt_args,
             )
         else:
             encoder_hidden_states = simplified_encoder(input_ids).to(device)
-            kv_decoder_input_ids = input_ids[:,-1:].to(device)
-            decoder_output = decoder_with_lm_head.decoder(input_ids=kv_decoder_input_ids, encoder_hidden_states=encoder_hidden_states, use_cache=True, past_key_values=None) # decoder output at t-1 step (logits, past_key_values from 0 to t-1)
+            kv_decoder_input_ids = input_ids[:, -1:].to(device)
+            decoder_output = decoder_with_lm_head.decoder(
+                input_ids=kv_decoder_input_ids,
+                encoder_hidden_states=encoder_hidden_states,
+                use_cache=True,
+                past_key_values=None,
+            )  # decoder output at t-1 step (logits, past_key_values from 0 to t-1)
             past_key_values = decoder_output[1]
             # This code allows for huggingface compatible torch class to use onnx exporter (change just before onnx.export)
             old_forward = decoder_with_lm_head.forward
+
             def _export_forward(input_ids, encoder_hidden_states, past_key_values):
-                result = old_forward(input_ids, encoder_hidden_states, past_key_values=past_key_values, use_cache=True)
+                result = old_forward(
+                    input_ids,
+                    encoder_hidden_states,
+                    past_key_values=past_key_values,
+                    use_cache=True,
+                )
                 return result
+
             decoder_with_lm_head.forward = _export_forward
 
             torch.onnx.export(
@@ -379,15 +405,22 @@ class T5DecoderConverter(ModelFileConverter):
                     **outputs[1].get_torch_dynamic_axis_encoding(),
                 },
                 training=torch.onnx.TrainingMode.EVAL,
-                **opt_args
+                **opt_args,
             )
 
-            cross_attention_kv_generator = T5DecoderCrossAttentionKVGenerator(decoder_with_lm_head.decoder, device)
+            cross_attention_kv_generator = T5DecoderCrossAttentionKVGenerator(
+                decoder_with_lm_head.decoder, device
+            )
             decoder_folder, decoder_name = os.path.split(output_fpath)
             decoder_name, decoder_ext = os.path.splitext(decoder_name)
-            output_fpath_kv_generator_folder = os.path.join(decoder_folder, "cross_attention_kv_generator")
-            os.makedirs(output_fpath_kv_generator_folder, exist_ok = True)
-            output_fpath_kv_generator = os.path.join(output_fpath_kv_generator_folder, decoder_name + "-cross_attention_kv_generator" + decoder_ext)
+            output_fpath_kv_generator_folder = os.path.join(
+                decoder_folder, "cross_attention_kv_generator"
+            )
+            os.makedirs(output_fpath_kv_generator_folder, exist_ok=True)
+            output_fpath_kv_generator = os.path.join(
+                output_fpath_kv_generator_folder,
+                decoder_name + "-cross_attention_kv_generator" + decoder_ext,
+            )
             torch.onnx.export(
                 cross_attention_kv_generator,
                 (encoder_hidden_states),
@@ -401,14 +434,22 @@ class T5DecoderConverter(ModelFileConverter):
                     **outputs[0].get_torch_dynamic_axis_encoding(),
                 },
                 training=torch.onnx.TrainingMode.EVAL,
-                **opt_args
+                **opt_args,
             )
 
             if network_metadata.precision.fp16:
-                process_onnx([OnnxProcessOperation.CLAMP_WEIGHTS], output_fpath_kv_generator, output_fpath_kv_generator)
+                process_onnx(
+                    [OnnxProcessOperation.CLAMP_WEIGHTS],
+                    output_fpath_kv_generator,
+                    output_fpath_kv_generator,
+                )
 
         if network_metadata.precision.fp16:
-            process_onnx([OnnxProcessOperation.MOVE_CAST_OP, OnnxProcessOperation.CLAMP_WEIGHTS], output_fpath, output_fpath)
+            process_onnx(
+                [OnnxProcessOperation.MOVE_CAST_OP, OnnxProcessOperation.CLAMP_WEIGHTS],
+                output_fpath,
+                output_fpath,
+            )
 
         return T5DecoderONNXFile(output_fpath, network_metadata)
 
@@ -418,7 +459,12 @@ class T5EncoderConverter(ModelFileConverter):
         super().__init__(T5EncoderTorchFile, T5EncoderONNXFile, T5EncoderTRTEngine)
 
     def onnx_to_trt(
-        self, output_fpath: str, input_fpath: str, network_metadata: NetworkMetadata, profiles: List[Profile], preview_features: List[PreviewFeature]
+        self,
+        output_fpath: str,
+        input_fpath: str,
+        network_metadata: NetworkMetadata,
+        profiles: List[Profile],
+        preview_features: List[PreviewFeature],
     ):
         """
         Override onnx_to_trt function from base.
@@ -430,9 +476,13 @@ class T5EncoderConverter(ModelFileConverter):
         if network_metadata.precision.fp16 and network_metadata.variant != "t5-small":
             network_metadata_cp_dct = network_metadata._asdict()
             del network_metadata_cp_dct["precision"]
-            network_metadata = NetworkMetadata(**network_metadata_cp_dct, precision=Precision(fp16=False))
+            network_metadata = NetworkMetadata(
+                **network_metadata_cp_dct, precision=Precision(fp16=False)
+            )
 
-        return super().onnx_to_trt(output_fpath, input_fpath, network_metadata, profiles, preview_features)
+        return super().onnx_to_trt(
+            output_fpath, input_fpath, network_metadata, profiles, preview_features
+        )
 
     def torch_to_onnx(
         self, output_fpath: str, model: Module, network_metadata: NetworkMetadata
@@ -455,12 +505,12 @@ class T5EncoderConverter(ModelFileConverter):
         outputs = T5ModelTRTConfig.get_output_dims(network_metadata)["encoder"]
 
         # Exports to ONNX
-        opt_args={}
+        opt_args = {}
 
-        version_major = int((torch.__version__).split('.')[0])
-        version_minor = int((torch.__version__).split('.')[1])
+        version_major = int((torch.__version__).split(".")[0])
+        version_minor = int((torch.__version__).split(".")[1])
         if version_major < 1 or (version_major == 1 and version_minor < 11):
-            opt_args['use_external_data_format'] = True
+            opt_args["use_external_data_format"] = True
         torch.onnx.export(
             simplified_encoder,
             input_ids,
@@ -474,10 +524,14 @@ class T5EncoderConverter(ModelFileConverter):
                 **outputs.get_torch_dynamic_axis_encoding(),
             },
             training=torch.onnx.TrainingMode.EVAL,
-            **opt_args
+            **opt_args,
         )
 
         if network_metadata.precision.fp16:
-            process_onnx([OnnxProcessOperation.MOVE_CAST_OP, OnnxProcessOperation.CLAMP_WEIGHTS], output_fpath, output_fpath)
+            process_onnx(
+                [OnnxProcessOperation.MOVE_CAST_OP, OnnxProcessOperation.CLAMP_WEIGHTS],
+                output_fpath,
+                output_fpath,
+            )
 
         return T5EncoderONNXFile(output_fpath, network_metadata)

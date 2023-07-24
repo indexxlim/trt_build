@@ -55,7 +55,9 @@ Precision = namedtuple("Precision", ["fp16"])
 NetworkMetadata = namedtuple("NetworkMetadata", ["variant", "precision", "other"])
 
 """TimingProfile(iterations: int, number: int, warmup: int, duration: int, percentile: int or [int])"""
-TimingProfile = namedtuple("TimingProfile", ["iterations", "number", "warmup", "duration", "percentile"])
+TimingProfile = namedtuple(
+    "TimingProfile", ["iterations", "number", "warmup", "duration", "percentile"]
+)
 
 
 """NetworkModel(name: str, fpath: str)"""
@@ -75,6 +77,63 @@ Args:
 NetworkRuntime(name: str, runtime: float)
 """
 NetworkRuntime = namedtuple("NetworkRuntime", ["name", "runtime"])
+
+
+class speachDims:
+    """Helper class for interfacing dimension constructs with Polygraphy and PyTorch."""
+
+    BATCH = "batch"
+    FEATURE = "feature"
+    SEQUENCE = "sequence"
+
+    def __init__(self, encoding: OrderedDict):
+        self.encoding = encoding
+
+    def create_new_sequence_dim(dim_type: str) -> str:
+        """
+        Returns a new sequence dimension.
+
+        Return:
+            str: Returns a sequence dimension which Dims.SEQUENCE appended by dim_type.
+        """
+        return speachDims.SEQUENCE + "_" + speachDims.FEATURE + "_" + dim_type
+
+    def get_dims(self):
+        """
+        Returns the encoding dimensions. speachDims include mel features and sequence length.
+
+        Return:
+            OrderedDict[str, Union[int, str]]; Returns dimensional encoding. Example: {'input_features': (1, FEATURE_DIM, SEQUENCE_DIM)}
+        """
+        return self.encoding
+
+    def get_names(self) -> Tuple[str]:
+        return tuple(self.encoding.keys())
+
+    def get_lengths(self) -> Tuple[Union[int, str]]:
+        return tuple(self.encoding.values())
+
+    def get_torch_dynamic_axis_encoding(self) -> dict:
+        """
+        Returns a Pytorch "dynamic_axes" encoding for onnx.export.
+
+        Returns:
+            dict: Returns a 'dynamic' index with corresponding names according to:
+                https://pytorch.org/docs/stable/onnx.html
+        """
+
+        dynamic_axes = {}
+        for k, v in self.encoding.items():
+            encodings = []
+            for idx, e in enumerate(v):
+                if isinstance(e, str) and (
+                    e == self.BATCH or self.SEQUENCE or self.FEATURE in e
+                ):
+                    encodings.append((idx, e))
+            dynamic_axes[k] = {idx: e for idx, e in encodings}
+
+        return dynamic_axes
+
 
 class Dims:
     """Helper class for interfacing dimension constructs with Polygraphy and PyTorch."""
@@ -127,6 +186,7 @@ class Dims:
             dynamic_axes[k] = {idx: e for idx, e in encodings}
 
         return dynamic_axes
+
 
 # Config Class
 class NNConfig:
@@ -210,7 +270,11 @@ class NNConfig:
         ]
         # Remove all boolean values that are False and remove True if exists
         true_length = len("~True")
-        other_result_filtered = [v[:-true_length] if v.endswith("~True") else v for v in other_result if "~False" not in v]
+        other_result_filtered = [
+            v[:-true_length] if v.endswith("~True") else v
+            for v in other_result
+            if "~False" not in v
+        ]
 
         if len(other_result_filtered) != 0:
             result.append("-".join(other_result_filtered))
