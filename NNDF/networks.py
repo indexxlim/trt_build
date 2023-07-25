@@ -96,7 +96,7 @@ class speachDims:
         Return:
             str: Returns a sequence dimension which Dims.SEQUENCE appended by dim_type.
         """
-        return speachDims.SEQUENCE + "_" + speachDims.FEATURE + "_" + dim_type
+        return speachDims.SEQUENCE + "_" + dim_type
 
     def get_dims(self):
         """

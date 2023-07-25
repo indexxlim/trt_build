@@ -22,7 +22,7 @@ from itertools import product
 from typing import Dict
 
 # TRT-HuggingFace
-from NNDF.networks import Precision, NetworkMetadata, NNConfig, Dims
+from NNDF.networks import Precision, NetworkMetadata, NNConfig, speachDims as Dims
 from NNDF.interface import MetadataArgparseInteropMixin
 
 # Limitation of namedtuples. You must declare namedtuples in module scope and not in classes.
@@ -275,7 +275,9 @@ class WhisperModelTRTConfig(NNConfig):
             )
             decoder_inputs = Dims(decoder_inputs_dict)
 
-        encoder_inputs = Dims(OrderedDict({"input_ids": (Dims.BATCH, Dims.SEQUENCE)}))
+        encoder_inputs = Dims(
+            OrderedDict({"input_features": (Dims.BATCH, Dims.FEATURE, Dims.SEQUENCE)})
+        )
 
         return {
             WhisperModelTRTConfig.NETWORK_DECODER_SEGMENT_NAME: decoder_inputs,

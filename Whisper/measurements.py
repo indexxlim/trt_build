@@ -18,6 +18,7 @@
 """
 Utils specific to Whisper network.
 """
+import timeit
 from types import MethodType
 
 # torch
@@ -92,6 +93,7 @@ def full_inference(
     whisper_decoder.get_encoder = MethodType(get_encoder, whisper_decoder)
 
     def _e2e():
+        start = timeit.default_timer()
         with torch.no_grad():
             decoder_output = whisper_decoder.generate(
                 input_features,
@@ -103,6 +105,9 @@ def full_inference(
                 pad_token_id=whisper_decoder.config.pad_token_id,
                 use_cache=use_cache,
             )
+        stop = timeit.default_timer()
+        print(stop - start)
+
         return decoder_output
 
     if isinstance(whisper_decoder, TRTNativeRunner):
@@ -120,12 +125,12 @@ def calculate_perplexity(
     t5_encoder,
     t5_decoder,
     tokenizer,
-    input_ids,
+    input_features,
     decoder_input_ids,
     max_seq_len=None,
     use_cuda=True,
 ):
-    encoder_last_hidden_state = t5_encoder(input_ids=input_ids)
+    encoder_last_hidden_state = t5_encoder(input_features=input_features)
     if isinstance(t5_decoder, TRTNativeRunner):
         t5_decoder.set_return_device("cuda" if use_cuda else "cpu")
 
