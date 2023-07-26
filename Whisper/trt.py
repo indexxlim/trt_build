@@ -856,7 +856,7 @@ class WhisperTRT(TRTInferenceCommand):
         encoder_profiles = [
             Profile().add(
                 "input_features",
-                min=(batch_size, 1),
+                min=(batch_size, 80, 3000),
                 opt=(batch_size, opt_input_seq_len),
                 max=(batch_size, max_input_length),
             )
