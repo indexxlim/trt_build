@@ -205,6 +205,13 @@ def move_t5_cast_op(graph):
     return graph
 
 
+def consInputs(node):
+    for i in node.inputs:
+        if isinstance(i, gs.Constant):
+            return 1
+    return 0
+
+
 def move_whisper_cast_op(graph):
     """
     T5 encoder and decoder have cast ops after residual add operation.
@@ -219,7 +226,7 @@ def move_whisper_cast_op(graph):
     version_check = torch_version_major == 1 and torch_version_minor > 12
     for n in cast_nodes:
         # Cast appears at the output of add and feeds into a Pow op.
-        if n.i().op == "Add":
+        if not consInputs(n) and n.i().op == "Add":
             found_pow = False
             for o in n.outputs:
                 for o1 in o.outputs:
@@ -277,8 +284,9 @@ def move_whisper_cast_op(graph):
 
     add_nodes = [node for node in graph.nodes if node.op == "Add"]
     for n in add_nodes:
-        if (version_check and (n.o().o().o().op == "Pow")) or (
-            (not version_check) and (n.o().op == "Pow")
+        if not consInputs(n) and (
+            (version_check and (n.o().o().o().op == "Pow"))
+            or ((not version_check) and (n.o().op == "Pow"))
         ):
             add_inputs = n.inputs
             outs = []
@@ -299,6 +307,7 @@ def move_whisper_cast_op(graph):
 class OnnxProcessOperation(Enum):
     CLAMP_WEIGHTS = 1
     MOVE_CAST_OP = 2
+    MOVE_CAST_OP2 = 3
 
 
 def process_onnx(
@@ -315,6 +324,8 @@ def process_onnx(
             graph = clamp_weights_onnx_to_fp16_bounds(graph, **kwargs)
         elif op == OnnxProcessOperation.MOVE_CAST_OP:
             graph = move_t5_cast_op(graph)
+        elif op == OnnxProcessOperation.MOVE_CAST_OP2:
+            graph = move_whisper_cast_op(graph)
 
     model = gs.export_onnx(graph)
     folder = os.path.split(onnx_input_fpath)[0]

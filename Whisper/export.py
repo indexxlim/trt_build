@@ -122,7 +122,7 @@ def add_extra_fp32(network_definition):
 class WhisperDecoderTorchFile(TorchModelFile):
     class TorchModule(Module, GenerationMixin):
         """
-        A simplied definition of T5 Decoder without support for loss.
+        A simplied definition of Whipser Decoder without support for loss.
         Decoder with lm-head attached.
         """
 
@@ -449,7 +449,10 @@ class WhisperDecoderConverter(ModelFileConverter):
 
         if network_metadata.precision.fp16:
             process_onnx(
-                [OnnxProcessOperation.MOVE_CAST_OP, OnnxProcessOperation.CLAMP_WEIGHTS],
+                [
+                    OnnxProcessOperation.MOVE_CAST_OP2,
+                    OnnxProcessOperation.CLAMP_WEIGHTS,
+                ],
                 output_fpath,
                 output_fpath,
             )
@@ -537,7 +540,10 @@ class WhisperEncoderConverter(ModelFileConverter):
 
         if network_metadata.precision.fp16:
             process_onnx(
-                [OnnxProcessOperation.MOVE_CAST_OP, OnnxProcessOperation.CLAMP_WEIGHTS],
+                [
+                    OnnxProcessOperation.MOVE_CAST_OP2,
+                    OnnxProcessOperation.CLAMP_WEIGHTS,
+                ],
                 output_fpath,
                 output_fpath,
             )

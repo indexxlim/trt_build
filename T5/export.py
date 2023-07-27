@@ -200,7 +200,7 @@ class T5DecoderCrossAttentionKVGenerator(Module):
         self.device = device
 
     def forward(self, encoder_hidden_states):
-        """
+        """`
         Use same but simplified code as HF modeling_t5.py to generate cross attention kv cache from provided encoder_hidden_states
         """
         present_key_values = ()
