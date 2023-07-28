@@ -161,6 +161,18 @@ class WhisperModelTRTConfig(NNConfig):
         TARGET_MODELS[3]: 24,
         TARGET_MODELS[4]: 32,
     }
+
+    NO_REPEAT_NGRAM_SIZE = 3
+    BOS_TOKEN_ID = 50258
+    EOS_TOKEN_ID = 50257
+
+    VOCAB_SIZE = {
+        TARGET_MODELS[0]: 50258,
+        TARGET_MODELS[1]: 50258,
+        TARGET_MODELS[2]: 50258,
+        TARGET_MODELS[3]: 50258,
+    }
+
     NETWORK_FULL_NAME = "full"
     NETWORK_DECODER_SEGMENT_NAME = "decoder"
     NETWORK_ENCODER_SEGMENT_NAME = "encoder"

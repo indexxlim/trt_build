@@ -118,7 +118,7 @@ def add_extra_fp32(network_definition):
     return network_definition
 
 
-# Torch File Encoding #
+# Torch File Encoding from BART#
 class WhisperDecoderTorchFile(TorchModelFile):
     class TorchModule(Module, GenerationMixin):
         """
@@ -134,9 +134,13 @@ class WhisperDecoderTorchFile(TorchModelFile):
             # HuggingFace's beam search requires to set self.device. Set it to avoid application crash
             self.device = torch.device("cuda")
             # Use hardcoded value to extend compatibility with older HF versions.
-            self.main_input_name = "input_features"
+            self.main_input_name = "input_ids"
             # trt uses cached and precomputed cross attention vs. framework uses the entire kv cache as output. Need to treat them differently.
             self.is_trt = is_trt
+
+        @staticmethod
+        def _reorder_cache(past, beam_idx):
+            return WhisperForConditionalGeneration._reorder_cache(past, beam_idx)
 
         def prepare_inputs_for_generation(
             self, input_ids, past=None, use_cache=None, **kwargs
@@ -145,12 +149,17 @@ class WhisperDecoderTorchFile(TorchModelFile):
             if past is not None:
                 input_ids = input_ids[:, -1:]
 
-            return {
+            ret = {
                 "input_ids": input_ids,
-                "encoder_hidden_states": kwargs["encoder_outputs"],
-                "use_cache": use_cache,
-                "past_key_values": past,
+                "encoder_hidden_states": kwargs["encoder_hidden_states"],
             }
+
+            # To really enable KV cache in HuggingFace, these args must be passed. Just specifying use_cache = True in BartConfig is not enough. Also see the additional "past_key_values" fields in the forward() return below.
+            if self.config.use_cache:
+                ret["use_cache"] = use_cache
+                ret["past_key_values"] = past
+
+            return ret
 
         def forward(
             self,
@@ -171,9 +180,7 @@ class WhisperDecoderTorchFile(TorchModelFile):
                 **kwargs,
             )
 
-            # self.config.d_model ** -0.5 for rescaling output on vocab.
-            # as seen in https://huggingface.co/docs/transformers/model_doc/t5#transformers.T5ForConditionalGeneration
-            sequence_output = decoder_outputs[0] * self.config.d_model**-0.5
+            sequence_output = decoder_outputs[0]
             logits = self.lm_head(sequence_output)
             if use_cache:
                 if self.is_trt:
@@ -184,8 +191,8 @@ class WhisperDecoderTorchFile(TorchModelFile):
                 else:
                     past_key_values = decoder_outputs[1]
 
-            if not return_dict:
-                return (logits, past_key_values)
+            if not kwargs.get("return_dict", False):
+                return (logits,) + decoder_outputs[1:]
 
             return Seq2SeqLMOutput(logits=logits, past_key_values=past_key_values)
 
