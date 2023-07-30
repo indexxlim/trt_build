@@ -84,6 +84,22 @@ from Whisper.export import (
 from NNDF.models import TRTEngineFile
 from NNDF.logger import G_LOGGER
 
+# from HuggingFace transformers
+from transformers.generation_logits_process import (
+    NoRepeatNGramLogitsProcessor,
+    MinLengthLogitsProcessor,
+    ForcedBOSTokenLogitsProcessor,
+    ForcedEOSTokenLogitsProcessor,
+    LogitsProcessorList,
+)
+from transformers.generation_stopping_criteria import (
+    MaxLengthCriteria,
+    StoppingCriteriaList,
+)
+from transformers.generation_beam_search import (
+    BeamSearchScorer,
+)
+
 
 class TRTHFRunner(TRTNativeRunner, GenerationMixin):
     """Runner that adds interop support for HF and HF provided greedy_search functions."""
@@ -513,45 +529,49 @@ class WhisperTRTDecoder(TRTHFRunner):
         # Note that for BART, this function is static, but for Whisper, it is not
         # if decoder past is not included in output
         # speedy decoding is disabled and no need to reorder
-        if past is None:
-            print(
-                "You might want to consider setting `use_cache=True` to speed up decoding"
+        # if past is None:
+        #     print(
+        #         "You might want to consider setting `use_cache=True` to speed up decoding"
+        #     )
+        #     return past
+
+        # reordered_decoder_past = ()
+        # for layer_past_states in past:
+        #     # get the correct batch idx from layer past batch dim
+        #     # batch dim of `past` is at 2nd position
+        #     reordered_layer_past_states = ()
+        #     for layer_past_state in layer_past_states:
+        #         if layer_past_state is not None:
+        #             # need to set correct `past` for each of the four key / value states
+        #             reordered_layer_past_states = reordered_layer_past_states + (
+        #                 layer_past_state.index_select(
+        #                     0, beam_idx.to(layer_past_state.device)
+        #                 ),
+        #             )
+        #         else:
+        #             reordered_layer_past_states = reordered_layer_past_states + (None,)
+
+        #     assert reordered_layer_past_states[0].shape == layer_past_states[0].shape
+        #     assert len(reordered_layer_past_states) == len(layer_past_states)
+
+        #     reordered_decoder_past = reordered_decoder_past + (
+        #         reordered_layer_past_states,
+        #     )
+        # return reordered_decoder_past
+    
+        reordered_past = ()
+        for layer_past in past:
+            # cached cross_attention states don't have to be reordered -> they are always the same
+            reordered_past += (
+                tuple(past_state.index_select(0, beam_idx) for past_state in layer_past[:2]) + layer_past[2:],
             )
-            return past
+        return reordered_past
 
-        reordered_decoder_past = ()
-        for layer_past_states in past:
-            # get the correct batch idx from layer past batch dim
-            # batch dim of `past` is at 2nd position
-            reordered_layer_past_states = ()
-            for layer_past_state in layer_past_states:
-                if layer_past_state is not None:
-                    # need to set correct `past` for each of the four key / value states
-                    reordered_layer_past_states = reordered_layer_past_states + (
-                        layer_past_state.index_select(
-                            0, beam_idx.to(layer_past_state.device)
-                        ),
-                    )
-                else:
-                    reordered_layer_past_states = reordered_layer_past_states + (None,)
-
-            assert reordered_layer_past_states[0].shape == layer_past_states[0].shape
-            assert len(reordered_layer_past_states) == len(layer_past_states)
-
-            reordered_decoder_past = reordered_decoder_past + (
-                reordered_layer_past_states,
-            )
-        return reordered_decoder_past
 
     def forward(
         self, input_ids, encoder_hidden_states, encoder_outputs=None, *args, **kwargs
     ):
-        bs = self.batch_size
-        max_length = self.max_sequence_length
-        TRTHFRunner.ENCODER_LENGTH = input_ids.shape[1]
-        input_length = input_ids.shape[1]
-        encoder_hidden_size = self.encoder_hidden_size
-        # Get the batch size.
+        # Get the batch size. diffence is beam search mode
         bs = input_ids.shape[0]  # in beam search mode, bs is batch_size * num_beams
 
         # Get the maximum sequence length.
@@ -566,111 +586,160 @@ class WhisperTRTDecoder(TRTHFRunner):
         # The sequence length of the encoder_hidden_states.
         encoder_length = TRTHFRunner.ENCODER_LENGTH
 
-        is_cpu_mode = (input_ids.device == torch.device("cpu")) or (
-            self.return_device == "cpu"
-        )
+        # Encoder hidden size
+        encoder_hidden_size = self.encoder_hidden_size
 
+        # KV cache flag
+        use_cache = kwargs.get("use_cache", False)
+
+        # flag for switch between dual engines
+        non_kv_flag = self.use_non_kv_engine or (self.config.use_cache and kwargs.get("past_key_values") is None)
+        # condition 1: during e2e decoding test, based on flag
+        # condition 2: during single-step decoder test, depending on whether past_key_values is empty
+        # note: without --enable-kv-cache arg, this flag should remain False
+
+        trt_context = self.trt_context_non_kv if non_kv_flag else self.trt_context
+        bindings = self.bindings_non_kv if non_kv_flag else self.bindings
+        inputs = self.inputs_non_kv if non_kv_flag else self.inputs
+        outputs = self.outputs_non_kv if non_kv_flag else self.outputs
+
+        is_cpu_mode = (input_ids.device == torch.device("cpu")) or (self.return_device == "cpu")
+
+
+        # We allocate the buffers using max_length, but we only need to first portion of it, so copy the data into the
+        # first portion of the input buffer.
+        # TODO: Could we just reuse input_ids' data_ptr() as the first binding when input_ids is already contiguous to
+        # avoid an additional D2D?
         if is_cpu_mode:
-            input_ids = input_ids.int().cuda()
-
-        # input_ids needs to be an in int type.
-        self.bindings[0] = input_ids.int().data_ptr()
-        self.trt_context.set_binding_shape(0, input_ids.shape)
+            inputs["input_ids"] = input_ids.int().flatten().contiguous().cuda()
+            bindings[0] = inputs["input_ids"].data_ptr()
+        else:
+            inputs["input_ids"][:bs * input_length] = input_ids.flatten()
+    
+        trt_context.set_binding_shape(0, input_ids.shape)
 
         # If encoder hidden states have not been copied yet, copy the hidden states to the input buffer.
         if not self.persist_encoder_hidden_states:
-            self.set_encoder_hidden_states_for_inference_cycle(encoder_hidden_states)
+            if is_cpu_mode:
+                inputs["encoder_hidden_states"] = encoder_hidden_states.flatten().contiguous().cuda()
+                bindings[1] = inputs["encoder_hidden_states"].data_ptr()
+            else:
+                inputs["encoder_hidden_states"][:bs * encoder_length * encoder_hidden_size] = encoder_hidden_states.flatten()
 
-        if self.config.use_cache:
-            if kwargs.get("past_key_values") is None:
-                self.past_decoder_length = 0
-            if not self.persist_cross_attention_kv_cache:
-                self.set_cross_attention_kv_cache_for_inference_cycle(
-                    encoder_hidden_states
-                )
-                cross_attention_kv_shape = (
-                    bs,
-                    self.num_heads,
-                    encoder_length,
-                    self.embedding_size_per_head,
-                )
+        # Set the binding shape of encoder_hidden_states, which should be (bs, encoder_length, encoder_hidden_size).
+        trt_context.set_binding_shape(1, (bs, encoder_length, encoder_hidden_size))
+
+
+        if self.config.use_cache: # or use_cache
+            if non_kv_flag:
+                # use non-kv engine, no additional inputs
+                past_decoder_length = 0
+            else:
+                # use kv engine
+                past_key_values = kwargs.get("past_key_values") # set by prepare_inputs_for_generation() during HF e2e pipeline; if only test decoder, need to set this field
+                past_decoder_length = past_key_values[0][0].size(2)
+                num_heads = self.num_heads
+                embedding_size_per_head = self.embedding_size_per_head
+
+                # for all BART variants, # encoder layers = # decoder layers, so just divide total # layers by 2
                 for i in range(self.num_decoder_layers):
-                    self.trt_context.set_binding_shape(
-                        self.kv_cache_binding_offset + 4 * i + 2,
-                        cross_attention_kv_shape,
-                    )
-                    self.trt_context.set_binding_shape(
-                        self.kv_cache_binding_offset + 4 * i + 3,
-                        cross_attention_kv_shape,
-                    )
 
-            # When switching trt profiles, the binding shape needs to be reset, so we set binding shape at each forward pass
-            self_attention_kv_shape = (
-                bs,
-                self.num_heads,
-                self.past_decoder_length,
-                self.embedding_size_per_head,
-            )
-            for i in range(self.num_decoder_layers):
-                self.trt_context.set_binding_shape(
-                    self.kv_cache_binding_offset + 4 * i, self_attention_kv_shape
-                )
-                self.trt_context.set_binding_shape(
-                    self.kv_cache_binding_offset + 4 * i + 1, self_attention_kv_shape
-                )
+                    # Set the binding shape of self-attention KV caches, which should be (bs, num_heads, past_decoder_length, embedding_size_per_head).
+                    self_attention_kv_shape = (bs, num_heads, past_decoder_length, embedding_size_per_head)
+                    self_attention_kv_flatten_length = bs * num_heads * past_decoder_length * embedding_size_per_head
 
+                    if past_key_values is not None:
+                        if past_key_values[0][0].device == torch.device("cpu"):
+                            inputs[f"past_key_values.{i}.decoder.key"] = past_key_values[i][0].flatten().contiguous().cuda()
+                            bindings[self.kv_cache_binding_offset+4*i] = inputs[f"past_key_values.{i}.decoder.key"].data_ptr()
+
+                            inputs[f"past_key_values.{i}.decoder.value"] = past_key_values[i][1].flatten().contiguous().cuda()
+                            bindings[self.kv_cache_binding_offset+4*i+1] = inputs[f"past_key_values.{i}.decoder.value"].data_ptr()
+
+                        else:
+                            inputs[f"past_key_values.{i}.decoder.key"][:self_attention_kv_flatten_length] = past_key_values[i][0].flatten()
+
+                            inputs[f"past_key_values.{i}.decoder.value"][:self_attention_kv_flatten_length] = past_key_values[i][1].flatten()
+
+                    trt_context.set_binding_shape(self.kv_cache_binding_offset+4*i, self_attention_kv_shape)
+                    trt_context.set_binding_shape(self.kv_cache_binding_offset+4*i + 1, self_attention_kv_shape)
+
+                # Set the binding shape of cross-attention KV caches, which should be (bs, num_heads, encoder_length, embedding_size_per_head).
+                # since cross-attention KV cache dimension is fixed, we set once at the start and skip later
+                if not self.persist_cross_attention_kv_cache:
+                    self.set_cross_attention_kv_cache_for_inference_cycle(past_key_values)
+
+        
         # Launch TRT inference.
-        assert self.trt_context.all_binding_shapes_specified
-        self.trt_context.execute_v2(bindings=self.bindings)
+        # TODO: Could we use execute_v2_async() instead of execute_v2()? Current profiling shows that there is a
+        # synchronization inside TRT's inference body, so this change may not be needed.
+        trt_context.execute_v2(bindings=bindings)
 
-        # For bs > 1, this is required, so cannot avoid this D2D copy
-        logits_length = bs * input_length * self.config.vocab_size
-        logits = self.hidden_states.flatten()[:logits_length].view(
-            bs, input_length, self.config.vocab_size
-        )
+        # We allocate the buffers using max_length, but we only need to first portion of it, so get only the first
+        # portion of the output buffer and return that.
+        # TODO: Could we construct a Torch tensor using given data_ptr() to avoid this D2D copy?
+        hidden_states_output = outputs["hidden_states"]
         if is_cpu_mode:
-            logits = logits.cpu()
+            hidden_states_output = hidden_states_output.cpu()
 
+        folded = hidden_states_output[:bs * input_length * vocab_size].view(bs, input_length, vocab_size)
         present_key_values = None
         if self.config.use_cache:
+            # 1st decoding step and steps after handle the outputs in the same way
             present_key_values = ()
+            curr_decoder_length = past_decoder_length + input_length
             num_heads = self.num_heads
             embedding_size_per_head = self.embedding_size_per_head
 
             for i in range(self.num_decoder_layers):
-                self_attention_k_output = self.self_attention_cache[
-                    f"key_values.{i}.decoder.key"
-                ]
-                self_attention_v_output = self.self_attention_cache[
-                    f"key_values.{i}.decoder.value"
-                ]
+
+                self_attention_kv_shape = (bs, num_heads, curr_decoder_length, embedding_size_per_head)
+                self_attention_kv_flatten_length = bs * num_heads * curr_decoder_length * embedding_size_per_head
+
+                cross_attention_kv_shape = (bs, num_heads, encoder_length, embedding_size_per_head)
+                cross_attention_kv_flatten_length = bs * num_heads * encoder_length * embedding_size_per_head
+
+                self_attn_k_output = outputs[f"present_key_values.{i}.decoder.key"]
+                self_attn_v_output = outputs[f"present_key_values.{i}.decoder.value"]
                 if is_cpu_mode:
-                    self_attention_k_output = self_attention_k_output.cpu()
-                    self_attention_v_output = self_attention_v_output.cpu()
+                    self_attn_k_output = self_attn_k_output.cpu()
+                    self_attn_v_output = self_attn_v_output.cpu()
 
-                present_key_values += (
-                    (self_attention_k_output, self_attention_v_output),
-                )
+                self_attn_k = self_attn_k_output[:self_attention_kv_flatten_length].view(*self_attention_kv_shape)
+                self_attn_v = self_attn_v_output[:self_attention_kv_flatten_length].view(*self_attention_kv_shape)
 
-            self.past_decoder_length += 1
+                cross_attn_k = None
+                cross_attn_v = None
+                if is_cpu_mode or non_kv_flag:
+                    cross_attn_k_output = outputs[f"present_key_values.{i}.encoder.key"]
+                    cross_attn_v_output = outputs[f"present_key_values.{i}.encoder.value"]
+                    if is_cpu_mode:
+                        cross_attn_k_output = cross_attn_k_output.cpu()
+                        cross_attn_v_output = cross_attn_v_output.cpu()
+                    cross_attn_k = cross_attn_k_output[:cross_attention_kv_flatten_length].view(*cross_attention_kv_shape)
+                    cross_attn_v = cross_attn_v_output[:cross_attention_kv_flatten_length].view(*cross_attention_kv_shape)
+
+                present_key_values += ((self_attn_k, self_attn_v, cross_attn_k, cross_attn_v), ) # make multi-dim tuple
 
         # Transfer predictions back from GPU to do greedy search
-        return Seq2SeqLMOutput(
-            logits=logits.to(self.return_device),
-            past_key_values=present_key_values,
-        )
+        return Seq2SeqLMOutput(logits=folded.to(self.return_device), past_key_values=present_key_values,)
+    
 
     def prepare_inputs_for_generation(
-        self, input_features, past=None, use_cache=None, **kwargs
+        self, input_ids, past=None, use_cache=None, **kwargs
     ):
-        # In HuggingFace generation_utils.py, this function will be called at each decoding step, before running the decoder's forward().
+        # in HuggingFace generation_utils.py, this function will be called at each decoding step, before running the decoder's forward().
+        # So we can use it to set the flag indicating if this is the 1st decoding step (use non-kv engine) or steps after (use kv engine)
+        # cut decoder_input_ids if past is used (with past cache, only need to process the current length 1 token)
+        # also, if past exists, it means we're at > 1 decoding steps thus set non-kv engine flag to False
 
         if past is not None:
-            input_features = input_features[:, -1:]
+            input_ids = input_ids[:, -1:]
+            self.use_non_kv_engine = False
 
         ret = {
-            "input_features": input_features,
-            "encoder_hidden_states": kwargs["encoder_outputs"].get("last_hidden_state"),
+            "input_features": input_ids,
+            "encoder_hidden_states": kwargs["encoder_hidden_states"],
         }
 
         if self.config.use_cache:
@@ -721,6 +790,10 @@ class WhisperTRT(TRTInferenceCommand):
 
         self.frameworks_cmd.cleanup(workspace, keep_onnx_model, keep_torch_model)
 
+    def setup(self, encoder, decoder):
+        self.whisper_trt_encoder = encoder
+        self.whisper_trt_decoder = decoder
+
     def generate(
         self,
         input_features,
@@ -739,26 +812,67 @@ class WhisperTRT(TRTInferenceCommand):
         if min_length is None:
             min_length = WhisperModelTRTConfig.MIN_OUTPUT_LENGTH[self.metadata.variant]
 
-        encoder_last_hidden_state = self.whisper_trt_encoder(
-            input_features=input_features
+        stopping_criteria = StoppingCriteriaList([MaxLengthCriteria(max_length)])
+        logits_processor = LogitsProcessorList([
+            NoRepeatNGramLogitsProcessor(WhisperModelTRTConfig.NO_REPEAT_NGRAM_SIZE),
+            MinLengthLogitsProcessor(min_length, WhisperModelTRTConfig.EOS_TOKEN_ID),
+            ForcedBOSTokenLogitsProcessor(WhisperModelTRTConfig.BOS_TOKEN_ID),
+            ForcedEOSTokenLogitsProcessor(max_length, WhisperModelTRTConfig.EOS_TOKEN_ID)
+        ])
+        
+        decoder_input_ids = torch.full(
+            (batch_size, 1), WhisperModelTRTConfig.EOS_TOKEN_ID, dtype=torch.int32
         ).to("cuda")
 
-        decoder_output = self.whisper_trt_decoder.generate(
-            input_features,
-            max_length=max_length,
-            min_length=min_length,
-            num_beams=num_beams,
-            early_stopping=early_stopping,
-            eos_token_id=self.whisper_trt_decoder.config.eos_token_id,
-            pad_token_id=self.whisper_trt_decoder.config.pad_token_id,
-            use_cache=use_cache,
-            encoder_outputs=BaseModelOutput(
-                last_hidden_state=encoder_last_hidden_state
-            ),
-        )
+        if num_beams == 1:
+            G_LOGGER.info("Running full inference with greedy decoding...")
+            encoder_last_hidden_state = self.whisper_trt_encoder(input_features=input_features)
+            self.whisper_trt_decoder.set_encoder_hidden_states_for_inference_cycle(encoder_last_hidden_state)
+            decoder_output = self.BART_trt_decoder.greedy_search(
+                input_ids=decoder_input_ids,
+                encoder_hidden_states=encoder_last_hidden_state,
+                stopping_criteria=stopping_criteria,
+                logits_processor=logits_processor,
+                use_cache=use_cache
+            )
+        else:
+            G_LOGGER.info(f"Running full inference with beam search (num_beams = {num_beams}) decoding...")
 
-        self.whisper_trt_decoder.reset()
+            beam_scorer = BeamSearchScorer(
+                batch_size=batch_size,
+                num_beams=num_beams,
+                device="cuda",
+                do_early_stopping=early_stopping,
+            )
+
+            decoder_input_ids = expand_inputs_for_beam_search(decoder_input_ids, expand_size=num_beams)
+
+            encoder_last_hidden_state = self.whisper_trt_encoder(input_features=input_features)
+
+            encoder_last_hidden_state = expand_inputs_for_beam_search(encoder_last_hidden_state, expand_size=num_beams)
+
+            self.whisper_trt_decoder.set_encoder_hidden_states_for_inference_cycle(encoder_last_hidden_state)
+            decoder_output = self.whisper_trt_decoder.beam_search(
+                input_ids=decoder_input_ids,
+                beam_scorer=beam_scorer,
+                encoder_hidden_states=encoder_last_hidden_state,
+                stopping_criteria=stopping_criteria,
+                logits_processor=logits_processor,
+                use_cache=use_cache
+            )
+
+        self.reset_decoder_state()
         return decoder_output
+    
+    def reset_decoder_state(self):
+        # During execute_inference, set_encoder_hidden_states_for_inference_cycle will be called in full_inference_greedy anyway to overwrite the saved encoder_hidden_states
+        # But explicit reset this flag is still beneficial
+        self.whisper_trt_decoder.persist_encoder_hidden_states = False
+        # Because the same decoder is used for different inputs, need to reset the flags for different inputs.
+        # TODO: In BARTTRTDecoder, maybe a reset function is needed to capture this issue after each task.
+        if self.metadata.other.kv_cache:
+            self.whisper_trt_decoder.persist_cross_attention_kv_cache = False
+            self.whisper_trt_decoder.use_non_kv_engine = self.metadata.other.kv_cache
 
     def execute_inference(
         self,
