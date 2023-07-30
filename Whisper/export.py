@@ -143,14 +143,14 @@ class WhisperDecoderTorchFile(TorchModelFile):
             return WhisperForConditionalGeneration._reorder_cache(past, beam_idx)
 
         def prepare_inputs_for_generation(
-            self, input_ids, past=None, use_cache=None, **kwargs
+            self, input_features, past=None, use_cache=None, **kwargs
         ):
             # cut decoder_input_ids if past is used
             if past is not None:
-                input_ids = input_ids[:, -1:]
+                input_features = input_features[:, -1:]
 
             ret = {
-                "input_ids": input_ids,
+                "input_features": input_features,
                 "encoder_hidden_states": kwargs["encoder_hidden_states"],
             }
 
