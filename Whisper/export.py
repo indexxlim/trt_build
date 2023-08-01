@@ -508,7 +508,6 @@ class WhisperEncoderConverter(ModelFileConverter):
     ):
         """
         Exports a given huggingface Whisper to encoder architecture only.
-        Inspired by https://github.com/onnx/models/blob/master/text/machine_comprehension/t5/dependencies/T5-export.py
 
         Args:
             output_prefix (str): Path to the onnx file
@@ -517,9 +516,9 @@ class WhisperEncoderConverter(ModelFileConverter):
         Returns:
             Tuple[str]: Names of generated models
         """
-        device = model.device
-        input_features = torch.ones(1, 80, 3000).to(device)
-        simplified_encoder = WhisperEncoderTorchFile.TorchModule(model.model.encoder)
+        # device = model.device
+        input_features = torch.ones(1, 80, 3000)
+        simplified_encoder = WhisperEncoderTorchFile.TorchModule(model.get_encoder())
         inputs = WhisperModelTRTConfig.get_input_dims(network_metadata)["encoder"]
         outputs = WhisperModelTRTConfig.get_output_dims(network_metadata)["encoder"]
 
@@ -534,8 +533,8 @@ class WhisperEncoderConverter(ModelFileConverter):
             simplified_encoder,
             input_features,
             output_fpath,
-            do_constant_folding=True,
-            opset_version=13,
+            export_params=True,
+            opset_version=12,
             input_names=inputs.get_names(),
             output_names=outputs.get_names(),
             dynamic_axes={
@@ -547,13 +546,10 @@ class WhisperEncoderConverter(ModelFileConverter):
         )
 
         if network_metadata.precision.fp16:
+            G_LOGGER.debug("Clamping FP16 weights for Whisper")
+            # BART doesn't have T5's Add-Cast-Pow ordering issue
             process_onnx(
-                [
-                    OnnxProcessOperation.MOVE_CAST_OP2,
-                    OnnxProcessOperation.CLAMP_WEIGHTS,
-                ],
-                output_fpath,
-                output_fpath,
+                [OnnxProcessOperation.CLAMP_WEIGHTS], output_fpath, output_fpath
             )
 
         return WhisperEncoderONNXFile(output_fpath, network_metadata)

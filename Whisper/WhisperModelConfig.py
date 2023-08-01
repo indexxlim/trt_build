@@ -55,17 +55,26 @@ class WhisperMetadata(_WhisperMetadata, MetadataArgparseInteropMixin):
             help="Enables beam search during decoding.",
         )
 
-        network_group.add_argument(
-            "--fp16", action="store_true", help="Enables fp16 TensorRT tactics."
-        )
-
     @staticmethod
     def from_args(args: argparse.Namespace):
         return NetworkMetadata(
             variant=args.variant,
-            precision=Precision(fp16=args.fp16),
+            precision=Precision(fp16=False),
             other=WhisperMetadata(kv_cache=args.enable_kv_cache),
         )
+
+    @staticmethod
+    def add_inference_args(parser: argparse.ArgumentParser) -> None:
+        WhisperMetadata.add_args(parser)
+        inference_group = parser.add_argument_group("inference group")
+        inference_group.add_argument(
+            "--fp16", action="store_true", help="Enables fp16 TensorRT tactics."
+        )
+
+    @staticmethod
+    def from_inference_args(args: argparse.Namespace):
+        base_metadata = WhisperMetadata.from_args(args)
+        return base_metadata._replace(precision=Precision(fp16=False))
 
     @staticmethod
     def add_benchmarking_args(parser: argparse.ArgumentParser) -> None:
@@ -126,11 +135,19 @@ class WhisperModelTRTConfig(NNConfig):
     }
 
     MAX_SEQUENCE_LENGTH = {
-        TARGET_MODELS[0]: 448,
+        TARGET_MODELS[0]: 384,
         TARGET_MODELS[1]: 448,
         TARGET_MODELS[2]: 448,
         TARGET_MODELS[3]: 448,
         TARGET_MODELS[4]: 448,
+    }
+
+    ENCODER_HIDDEN_SIZE = {
+        TARGET_MODELS[0]: 384,
+        TARGET_MODELS[1]: 512,
+        TARGET_MODELS[2]: 768,
+        TARGET_MODELS[3]: 1024,
+        TARGET_MODELS[3]: 1280,
     }
 
     # To achieve identical results with original HuggingFace implementation, the min_length in model config should be consistent with each model variant
@@ -223,26 +240,19 @@ class WhisperModelTRTConfig(NNConfig):
         Returns:
             (Dict[str, Dims]): {"decoder": Dims, "encoder": Dims}
         """
+        decoder_inputs_dict = OrderedDict(
+            {
+                "input_ids": (Dims.BATCH, Dims.SEQUENCE),
+                "encoder_hidden_states": (
+                    Dims.BATCH,
+                    Dims.create_new_sequence_dim("encoder_hidden_length"),
+                    WhisperModelTRTConfig.ENCODER_HIDDEN_SIZE[
+                        metadata.variant
+                    ],  # dim not containing string 'Dims.BATCH' or 'Dims.SEQUENCE' will be non-dynamic axis
+                ),
+            }
+        )
         if metadata.other.kv_cache:
-            decoder_inputs_dict = OrderedDict(
-                {
-                    "input_ids": (Dims.BATCH, 1),
-                    "encoder_hidden_states": (
-                        Dims.BATCH,
-                        Dims.create_new_sequence_dim("encoder_hidden_length"),
-                        "encoder_hidden_size",
-                    ),
-                }
-            )
-            context_inputs_dict = OrderedDict(
-                {
-                    "encoder_hidden_states": (
-                        Dims.BATCH,
-                        Dims.create_new_sequence_dim("encoder_hidden_length"),
-                        "encoder_hidden_size",
-                    ),
-                }
-            )
             # for KV cache version, we need add per-layer KV cache inputs. `past_key_values` at each layer is (self-attention K, self-attention V, cross-attention K, cross-attention V)
             for i in range(WhisperModelTRTConfig.NUM_DECODER_LAYERS[metadata.variant]):
                 # decoder self-attention KV cache (dim[0] & dim[2] are dynamic, and dim[2] varies at each decoding timestep)
@@ -273,19 +283,7 @@ class WhisperModelTRTConfig(NNConfig):
                     f"past_key_values.{i}.encoder.value"
                 ] = cross_attention_past_kv_dims
 
-            decoder_inputs = [Dims(context_inputs_dict), Dims(decoder_inputs_dict)]
-        else:
-            decoder_inputs_dict = OrderedDict(
-                {
-                    "input_ids": (Dims.BATCH, Dims.SEQUENCE),
-                    "encoder_hidden_states": (
-                        Dims.BATCH,
-                        Dims.create_new_sequence_dim("encoder_hidden_length"),
-                        "encoder_hidden_size",
-                    ),
-                }
-            )
-            decoder_inputs = Dims(decoder_inputs_dict)
+        decoder_inputs = Dims(decoder_inputs_dict)
 
         encoder_inputs = Dims(
             OrderedDict({"input_features": (Dims.BATCH, Dims.FEATURE, Dims.SEQUENCE)})
@@ -305,16 +303,20 @@ class WhisperModelTRTConfig(NNConfig):
         Returns:
             (Dict[str, Dims]): {"decoder": Dims, "encoder": Dims}
         """
+        decoder_outputs_dict = OrderedDict(
+            {"hidden_states": (Dims.BATCH, Dims.SEQUENCE)}
+        )
+
         if metadata.other.kv_cache:
-            decoder_outputs_dict = OrderedDict({"hidden_states": (Dims.BATCH, 1)})
-            context_outputs_dict = OrderedDict({})
             # for KV cache version, we need add per-layer KV cache inputs. `past_key_values` at each layer is (self-attention K, self-attention V, cross-attention K, cross-attention V)
+
+            # for all BART variants, # encoder layers = # decoder layers, so just divide total # layers by 2
             for i in range(WhisperModelTRTConfig.NUM_DECODER_LAYERS[metadata.variant]):
                 # decoder self-attention KV cache (dim[0] & dim[2] are dynamic, and dim[2] varies at each decoding timestep)
                 self_attention_present_kv_dims = (
                     Dims.BATCH,
                     "num_heads",
-                    Dims.create_new_sequence_dim("past_decoder_length"),
+                    Dims.create_new_sequence_dim("decoder_length"),
                     "embedding_size_per_head",
                 )
                 decoder_outputs_dict[
@@ -331,23 +333,24 @@ class WhisperModelTRTConfig(NNConfig):
                     Dims.create_new_sequence_dim("encoder_length"),
                     "embedding_size_per_head",
                 )
-                context_outputs_dict[
+                decoder_outputs_dict[
                     f"present_key_values.{i}.encoder.key"
                 ] = cross_attention_present_kv_dims
-                context_outputs_dict[
+                decoder_outputs_dict[
                     f"present_key_values.{i}.encoder.value"
                 ] = cross_attention_present_kv_dims
 
-            decoder_outputs = [Dims(context_outputs_dict), Dims(decoder_outputs_dict)]
-        else:
-            decoder_outputs_dict = OrderedDict(
-                {"hidden_states": (Dims.BATCH, Dims.SEQUENCE)}
-            )
-            decoder_outputs = Dims(decoder_outputs_dict)
+        decoder_outputs = Dims(decoder_outputs_dict)
 
         encoder_outputs = Dims(
             OrderedDict(
-                {"hidden_states": (Dims.BATCH, Dims.SEQUENCE, "encoder_hidden_size")}
+                {
+                    "hidden_states": (
+                        Dims.BATCH,
+                        Dims.SEQUENCE,
+                        WhisperModelTRTConfig.ENCODER_HIDDEN_SIZE[metadata.variant],
+                    )
+                }
             )
         )
 
