@@ -179,6 +179,14 @@ class WhisperModelTRTConfig(NNConfig):
         TARGET_MODELS[4]: 32,
     }
 
+    NUMBER_OF_HEADS = {
+        TARGET_MODELS[0]: 6,
+        TARGET_MODELS[1]: 8,
+        TARGET_MODELS[2]: 12,
+        TARGET_MODELS[3]: 16,
+        TARGET_MODELS[4]: 20,
+    }
+
     NO_REPEAT_NGRAM_SIZE = 3
     BOS_TOKEN_ID = 50258
     EOS_TOKEN_ID = 50257

@@ -173,17 +173,19 @@ class WhisperTRTEncoder(TRTHFRunner):
             self.max_sequence_length = hf_config.d_model
         self.encoder_hidden_size = hf_config.d_model
         self.main_input_name = "input_features"
-        self.mel_feature = 80
+        self.mel_feature = hf_config.num_mel_bins
+        self.nb_max_frames = 3000
         # We only have one profile to select so we can just grab the profile at the start of the class
-        self.profile_idx = self.get_optimization_profile(
-            batch_size=self.batch_size, sequence_length=1
-        )
+        self.profile_idx = 0
+        # self.profile_idx = self.get_optimization_profile(
+        #     batch_size=self.batch_size, sequence_length=1
+        # )
 
         self.input_shapes = {
             "input_features": (
                 self.batch_size,
                 self.mel_feature,
-                self.max_sequence_length,
+                self.nb_max_frames,
             )
         }
         self.input_types = {"input_features": torch.int32}
@@ -203,7 +205,7 @@ class WhisperTRTEncoder(TRTHFRunner):
     def forward(self, input_features, *args, **kwargs):
         bs = self.batch_size
         max_length = self.max_sequence_length
-        TRTHFRunner.ENCODER_LENGTH = input_features.shape[1]
+        TRTHFRunner.ENCODER_LENGTH = input_features.shape[2]
         input_length = input_features.shape[1]
         encoder_hidden_size = self.encoder_hidden_size
 
@@ -285,14 +287,16 @@ class WhisperTRTDecoder(TRTHFRunner):
         self.device = torch.device("cuda")
         self.main_input_name = "input_ids"
         self.encoder_hidden_size = hf_config.d_model
-        self.num_heads = hf_config.num_heads
+        self.num_heads = WhisperModelTRTConfig.NUMBER_OF_HEADS[network_metadata.variant]
         self.embedding_size_per_head = self.encoder_hidden_size // self.num_heads
-        self.num_decoder_layers = hf_config.num_decoder_layers
+        self.num_decoder_layers = WhisperModelTRTConfig.NUM_DECODER_LAYERS[
+            network_metadata.variant
+        ]
         self.profile_idx = self.get_optimization_profile(
             batch_size=self.batch_size * num_beams, sequence_length=1
         )
         input_profile_length = (
-            self.max_output_length if (not self.config.use_cache) else 1
+            self.max_sequence_length if (not self.config.use_cache) else 1
         )
 
         self.input_types = {
@@ -318,7 +322,9 @@ class WhisperTRTDecoder(TRTHFRunner):
         self.output_types = {"hidden_states": torch.float32}
 
         if self.config.use_cache:
-            self.num_decoder_layers = hf_config.num_decoder_layers
+            self.num_decoder_layers = WhisperModelTRTConfig.NUM_DECODER_LAYERS[
+                network_metadata.variant
+            ]
             # Set kv cache shape and type
             for i in range(self.num_decoder_layers):
                 kv_type_dict = {"encoder": torch.float32, "decoder": torch.float32}
@@ -1177,9 +1183,9 @@ class WhisperTRT(TRTInferenceCommand):
         encoder_profiles = [
             Profile().add(
                 "input_features",
-                min=(batch_size, 80, 3000),
-                opt=(batch_size, opt_input_seq_len),
-                max=(batch_size, max_sequence_length),
+                min=(batch_size, 80, 1500),
+                opt=(batch_size, 3000),
+                max=(batch_size, 3000),
             )
         ]
 
@@ -1211,9 +1217,11 @@ class WhisperTRT(TRTInferenceCommand):
         )
 
         if hf_config.use_cache:
-            num_heads = hf_config.num_heads
+            num_heads = WhisperModelTRTConfig.NUMBER_OF_HEADS[metadata.variant]
             embedding_size_per_head = encoder_hidden_size // num_heads
-            num_decoder_layers = hf_config.num_decoder_layers
+            num_decoder_layers = WhisperModelTRTConfig.NUM_DECODER_LAYERS[
+                metadata.variant
+            ]
             # Use TensorRT Zero-Tensor feature for the 1st decoder run, self attention is growing with increasing sequence.
             self_attention_profile = {
                 "min": (batch_size * num_beams, num_heads, 0, embedding_size_per_head),
