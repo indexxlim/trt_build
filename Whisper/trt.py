@@ -223,7 +223,7 @@ class WhisperTRTEncoder(TRTHFRunner):
             self.bindings[0] = self.inputs["input_features"].data_ptr()
         else:
             self.inputs["input_features"][
-                : bs * input_length
+                : bs * input_length * TRTHFRunner.ENCODER_LENGTH
             ] = input_features.flatten()
 
         # Set the binding shape of input_features, which should be (bs, input_length).
@@ -934,7 +934,7 @@ class WhisperTRT(TRTInferenceCommand):
             self.whisper_trt_decoder.set_encoder_hidden_states_for_inference_cycle(
                 encoder_last_hidden_state
             )
-            decoder_output = self.BART_trt_decoder.greedy_search(
+            decoder_output = self.whisper_trt_decoder.greedy_search(
                 input_ids=decoder_input_ids,
                 encoder_hidden_states=encoder_last_hidden_state,
                 stopping_criteria=stopping_criteria,
