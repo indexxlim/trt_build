@@ -106,6 +106,7 @@ class TRTHFRunner(TRTNativeRunner, GenerationMixin):
 
     # Stores the encoder input length received at runtime, which is used to slice decoder inputs.
     ENCODER_LENGTH = 0
+    MAX_SOURCE_POSITIONS = 0
 
     def _allocate_memory(
         self,
@@ -175,6 +176,7 @@ class WhisperTRTEncoder(TRTHFRunner):
         self.main_input_name = "input_features"
         self.mel_feature = hf_config.num_mel_bins
         self.nb_max_frames = 3000
+        self.max_source_positions = hf_config.max_source_positions
         # We only have one profile to select so we can just grab the profile at the start of the class
         self.profile_idx = 0
         # self.profile_idx = self.get_optimization_profile(
@@ -188,11 +190,11 @@ class WhisperTRTEncoder(TRTHFRunner):
                 self.nb_max_frames,
             )
         }
-        self.input_types = {"input_features": torch.int32}
+        self.input_types = {"input_features": torch.float32}
         self.output_shapes = {
             "hidden_states": (
                 self.batch_size,
-                self.max_sequence_length,
+                self.max_source_positions,
                 self.encoder_hidden_size,
             )
         }
@@ -204,8 +206,9 @@ class WhisperTRTEncoder(TRTHFRunner):
 
     def forward(self, input_features, *args, **kwargs):
         bs = self.batch_size
-        max_length = self.max_sequence_length
+        max_source_positions = self.max_source_positions
         TRTHFRunner.ENCODER_LENGTH = input_features.shape[2]
+        TRTHFRunner.MAX_SOURCE_POSITIONS = self.max_sequence_length
         input_length = input_features.shape[1]
         encoder_hidden_size = self.encoder_hidden_size
 
@@ -240,9 +243,9 @@ class WhisperTRTEncoder(TRTHFRunner):
         if is_cpu_mode:
             hidden_states_output = hidden_states_output.cpu()
 
-        folded = hidden_states_output[: bs * input_length * encoder_hidden_size].view(
-            bs, input_length, encoder_hidden_size
-        )
+        folded = hidden_states_output[
+            : bs * max_source_positions * encoder_hidden_size
+        ].view(bs, max_source_positions, encoder_hidden_size)
 
         return folded
 
@@ -261,7 +264,7 @@ class WhisperTRTDecoder(TRTHFRunner):
             trt_engine_file, network_metadata, hf_config, batch_size=batch_size
         )
         self.data_type = (
-            torch.float32 if not network_metadata.precision.fp16 else torch.float16
+            torch.float32  # if not network_metadata.precision.fp16 else torch.float16
         )
 
         # In benchmarking mode, the max_sequence_length should be the user-provided input_profile_max_len
@@ -295,6 +298,7 @@ class WhisperTRTDecoder(TRTHFRunner):
         self.profile_idx = self.get_optimization_profile(
             batch_size=self.batch_size * num_beams, sequence_length=1
         )
+        self.max_source_positions = hf_config.max_source_positions
         input_profile_length = (
             self.max_sequence_length if (not self.config.use_cache) else 1
         )
@@ -307,7 +311,7 @@ class WhisperTRTDecoder(TRTHFRunner):
             "input_ids": (self.batch_size * num_beams, input_profile_length),
             "encoder_hidden_states": (
                 self.batch_size * num_beams,
-                self.max_sequence_length,
+                self.max_source_positions,
                 self.encoder_hidden_size,
             ),
         }
@@ -428,6 +432,7 @@ class WhisperTRTDecoder(TRTHFRunner):
         # in beam search mode, bs is batch_size * num_beams
         bs = encoder_hidden_states.shape[0]
         encoder_hidden_size = self.encoder_hidden_size
+        max_source_positions = self.max_source_positions
         encoder_length = TRTHFRunner.ENCODER_LENGTH
         if encoder_hidden_states.device == torch.device("cpu"):
             self.inputs["encoder_hidden_states"] = (
@@ -436,7 +441,7 @@ class WhisperTRTDecoder(TRTHFRunner):
             self.bindings[1] = self.inputs["encoder_hidden_states"].data_ptr()
         else:
             self.inputs["encoder_hidden_states"][
-                : bs * encoder_length * encoder_hidden_size
+                : bs * max_source_positions * encoder_hidden_size
             ] = encoder_hidden_states.flatten()
 
         # for dual-engine approach in kv cache mode, set these for the non-kv engine as well
@@ -450,7 +455,7 @@ class WhisperTRTDecoder(TRTHFRunner):
                 ].data_ptr()
             else:
                 self.inputs_non_kv["encoder_hidden_states"][
-                    : bs * encoder_length * encoder_hidden_size
+                    : bs * max_source_positions * encoder_hidden_size
                 ] = encoder_hidden_states.flatten()
 
     def set_cross_attention_kv_cache_engine(self, cross_attention_kv_generator):
@@ -622,6 +627,9 @@ class WhisperTRTDecoder(TRTHFRunner):
         # Encoder hidden size
         encoder_hidden_size = self.encoder_hidden_size
 
+        # Encoder source position(positional embedding) size
+        max_source_positions = self.max_source_positions
+
         # KV cache flag
         use_cache = kwargs.get("use_cache", False)
 
@@ -663,11 +671,13 @@ class WhisperTRTDecoder(TRTHFRunner):
                 bindings[1] = inputs["encoder_hidden_states"].data_ptr()
             else:
                 inputs["encoder_hidden_states"][
-                    : bs * encoder_length * encoder_hidden_size
+                    : bs * max_source_positions * encoder_hidden_size
                 ] = encoder_hidden_states.flatten()
 
-        # Set the binding shape of encoder_hidden_states, which should be (bs, encoder_length, encoder_hidden_size).
-        trt_context.set_binding_shape(1, (bs, encoder_length, encoder_hidden_size))
+        # Set the binding shape of encoder_hidden_states, which should be (bs, max_source_positions, encoder_hidden_size).
+        trt_context.set_binding_shape(
+            1, (bs, max_source_positions, encoder_hidden_size)
+        )
 
         if self.config.use_cache:  # or use_cache
             if non_kv_flag:
@@ -832,7 +842,7 @@ class WhisperTRTDecoder(TRTHFRunner):
             self.use_non_kv_engine = False
 
         ret = {
-            "input_features": input_ids,
+            "input_ids": input_ids,
             "encoder_hidden_states": kwargs["encoder_hidden_states"],
         }
 
