@@ -658,7 +658,7 @@ class WhisperTRTDecoder(TRTHFRunner):
             inputs["input_ids"] = input_ids.int().flatten().contiguous().cuda()
             bindings[0] = inputs["input_ids"].data_ptr()
         else:
-            inputs["input_ids"][: bs * input_length] = input_ids.flatten()
+            inputs["input_ids"][:bs * input_length] = input_ids.flatten()
 
         trt_context.set_binding_shape(0, input_ids.shape)
 

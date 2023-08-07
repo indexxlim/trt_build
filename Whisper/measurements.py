@@ -162,7 +162,7 @@ def full_inference_greedy(
                 min_length, tokenizer.convert_tokens_to_ids(tokenizer.eos_token)
             ),
             ForcedBOSTokenLogitsProcessor(
-                tokenizer.convert_tokens_to_ids(tokenizer.bos_token)
+                WhisperModelTRTConfig.DECODER_START_TOKEN_ID
             ),
             ForcedEOSTokenLogitsProcessor(
                 max_length, tokenizer.convert_tokens_to_ids(tokenizer.eos_token)
@@ -247,7 +247,7 @@ def full_inference_beam(
                 min_length, tokenizer.convert_tokens_to_ids(tokenizer.eos_token)
             ),
             ForcedBOSTokenLogitsProcessor(
-                tokenizer.convert_tokens_to_ids(tokenizer.bos_token)
+                WhisperModelTRTConfig.DECODER_START_TOKEN_ID
             ),
             ForcedEOSTokenLogitsProcessor(
                 max_length, tokenizer.convert_tokens_to_ids(tokenizer.eos_token)
