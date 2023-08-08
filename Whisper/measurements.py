@@ -161,9 +161,7 @@ def full_inference_greedy(
             MinLengthLogitsProcessor(
                 min_length, tokenizer.convert_tokens_to_ids(tokenizer.eos_token)
             ),
-            ForcedBOSTokenLogitsProcessor(
-                WhisperModelTRTConfig.DECODER_START_TOKEN_ID
-            ),
+            ForcedBOSTokenLogitsProcessor(WhisperModelTRTConfig.DECODER_START_TOKEN_ID),
             ForcedEOSTokenLogitsProcessor(
                 max_length, tokenizer.convert_tokens_to_ids(tokenizer.eos_token)
             ),
@@ -192,7 +190,7 @@ def full_inference_greedy(
                 use_cache=use_cache,
             )
         return decoder_output_greedy
-    
+
     # With e2e we can opt to bind inputs only once for hidden states for optimization
     def _e2e_trt():
         with torch.no_grad():
@@ -246,9 +244,7 @@ def full_inference_beam(
             MinLengthLogitsProcessor(
                 min_length, tokenizer.convert_tokens_to_ids(tokenizer.eos_token)
             ),
-            ForcedBOSTokenLogitsProcessor(
-                WhisperModelTRTConfig.DECODER_START_TOKEN_ID
-            ),
+            ForcedBOSTokenLogitsProcessor(WhisperModelTRTConfig.DECODER_START_TOKEN_ID),
             ForcedEOSTokenLogitsProcessor(
                 max_length, tokenizer.convert_tokens_to_ids(tokenizer.eos_token)
             ),
@@ -257,7 +253,7 @@ def full_inference_beam(
 
     decoder_input_ids = torch.full(
         (batch_size, 1),
-        tokenizer.convert_tokens_to_ids(tokenizer.eos_token),
+        WhisperModelTRTConfig.DECODER_START_TOKEN_ID,
         dtype=torch.int32,
     )
     decoder_input_ids = expand_inputs_for_beam_search(

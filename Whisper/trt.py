@@ -925,7 +925,7 @@ class WhisperTRT(TRTInferenceCommand):
                 MinLengthLogitsProcessor(
                     min_length, WhisperModelTRTConfig.EOS_TOKEN_ID
                 ),
-                ForcedBOSTokenLogitsProcessor(WhisperModelTRTConfig.BOS_TOKEN_ID),
+                ForcedBOSTokenLogitsProcessor(WhisperModelTRTConfig.DECODER_START_TOKEN_ID),
                 ForcedEOSTokenLogitsProcessor(
                     max_length, WhisperModelTRTConfig.EOS_TOKEN_ID
                 ),
