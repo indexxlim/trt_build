@@ -36,9 +36,10 @@ from Whisper.WhisperModelConfig import WhisperModelTRTConfig
 from transformers.generation_logits_process import (
     NoRepeatNGramLogitsProcessor,
     MinLengthLogitsProcessor,
-    ForcedBOSTokenLogitsProcessor,
-    ForcedEOSTokenLogitsProcessor,
     LogitsProcessorList,
+    SuppressTokensAtBeginLogitsProcessor,
+    SuppressTokensLogitsProcessor,
+    ForceTokensLogitsProcessor,
 )
 from transformers.generation_stopping_criteria import (
     MaxLengthCriteria,
@@ -150,29 +151,27 @@ def full_inference_greedy(
     use_cuda=True,
     early_stopping=False,
     use_cache=False,
+    forced_decoder_ids=WhisperModelTRTConfig.FORCED_DECODER_IDS,
 ):
     G_LOGGER.info("Running full inference with greedy decoding...")
+    decoder_input_ids = torch.full(
+        (batch_size, 1),
+        WhisperModelTRTConfig.DECODER_START_TOKEN_ID,
+        dtype=torch.int32,
+    )
 
     stopping_criteria = StoppingCriteriaList([MaxLengthCriteria(max_length)])
     no_repeat_ngram_size = WhisperModelTRTConfig.NO_REPEAT_NGRAM_SIZE
     logits_processor = LogitsProcessorList(
         [
             NoRepeatNGramLogitsProcessor(no_repeat_ngram_size),
-            MinLengthLogitsProcessor(
-                min_length, tokenizer.convert_tokens_to_ids(tokenizer.eos_token)
+            SuppressTokensLogitsProcessor(WhisperModelTRTConfig.SUPPRESS_TOKENS),
+            SuppressTokensAtBeginLogitsProcessor(
+                WhisperModelTRTConfig.BEGIN_SUPPRESS_TOKENS, decoder_input_ids.shape[-1]
             ),
-            ForcedBOSTokenLogitsProcessor(WhisperModelTRTConfig.DECODER_START_TOKEN_ID),
-            ForcedEOSTokenLogitsProcessor(
-                max_length, tokenizer.convert_tokens_to_ids(tokenizer.eos_token)
-            ),
+            ForceTokensLogitsProcessor(forced_decoder_ids),
         ]
     )  # by checking HuggingFace's generate() implementation carefully, the default logits processor for BART has no_repeat_ngram_size = 3 and forced_eos_token_id = 2. In this way we can get identical results with raw HuggingFace
-
-    decoder_input_ids = torch.full(
-        (batch_size, 1),
-        tokenizer.convert_tokens_to_ids(tokenizer.eos_token),
-        dtype=torch.int32,
-    )
 
     if use_cuda:
         decoder_input_ids = decoder_input_ids.to("cuda")
@@ -231,9 +230,16 @@ def full_inference_beam(
     use_cuda=True,
     early_stopping=False,  # Now used to control beam search early_stopping to have the same meaning as HuggingFace
     use_cache=False,
+    forced_decoder_ids=WhisperModelTRTConfig.FORCED_DECODER_IDS,
 ):
     G_LOGGER.info(
         f"Running full inference with beam search (num_beams = {num_beams}) decoding..."
+    )
+
+    decoder_input_ids = torch.full(
+        (batch_size, 1),
+        WhisperModelTRTConfig.DECODER_START_TOKEN_ID,
+        dtype=torch.int32,
     )
 
     stopping_criteria = StoppingCriteriaList([MaxLengthCriteria(max_length)])
@@ -241,21 +247,14 @@ def full_inference_beam(
     logits_processor = LogitsProcessorList(
         [
             NoRepeatNGramLogitsProcessor(no_repeat_ngram_size),
-            MinLengthLogitsProcessor(
-                min_length, tokenizer.convert_tokens_to_ids(tokenizer.eos_token)
+            SuppressTokensLogitsProcessor(WhisperModelTRTConfig.SUPPRESS_TOKENS),
+            SuppressTokensAtBeginLogitsProcessor(
+                WhisperModelTRTConfig.BEGIN_SUPPRESS_TOKENS, decoder_input_ids.shape[-1]
             ),
-            ForcedBOSTokenLogitsProcessor(WhisperModelTRTConfig.DECODER_START_TOKEN_ID),
-            ForcedEOSTokenLogitsProcessor(
-                max_length, tokenizer.convert_tokens_to_ids(tokenizer.eos_token)
-            ),
+            ForceTokensLogitsProcessor(forced_decoder_ids),
         ]
-    )  # by checking HuggingFace's generate() implementation carefully, the default logits processor for BART has no_repeat_ngram_size = 3 and forced_eos_token_id = 2. In this way we can get identical results with raw HuggingFace
-
-    decoder_input_ids = torch.full(
-        (batch_size, 1),
-        WhisperModelTRTConfig.DECODER_START_TOKEN_ID,
-        dtype=torch.int32,
     )
+
     decoder_input_ids = expand_inputs_for_beam_search(
         decoder_input_ids, expand_size=num_beams
     )
