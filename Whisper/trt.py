@@ -43,6 +43,7 @@ from transformers.configuration_utils import PretrainedConfig
 from transformers.generation_utils import GenerationMixin
 from transformers.modeling_outputs import BaseModelOutput
 
+
 # tensorrt
 from tensorrt import PreviewFeature
 
@@ -86,12 +87,12 @@ from NNDF.logger import G_LOGGER
 
 # from HuggingFace transformers
 from transformers.generation_logits_process import (
-    NoRepeatNGramLogitsProcessor,
-    MinLengthLogitsProcessor,
-    ForcedBOSTokenLogitsProcessor,
-    ForcedEOSTokenLogitsProcessor,
     LogitsProcessorList,
+    SuppressTokensAtBeginLogitsProcessor,
+    SuppressTokensLogitsProcessor,
+    ForceTokensLogitsProcessor,
 )
+
 from transformers.generation_stopping_criteria import (
     MaxLengthCriteria,
     StoppingCriteriaList,
@@ -658,7 +659,7 @@ class WhisperTRTDecoder(TRTHFRunner):
             inputs["input_ids"] = input_ids.int().flatten().contiguous().cuda()
             bindings[0] = inputs["input_ids"].data_ptr()
         else:
-            inputs["input_ids"][:bs * input_length] = input_ids.flatten()
+            inputs["input_ids"][: bs * input_length] = input_ids.flatten()
 
         trt_context.set_binding_shape(0, input_ids.shape)
 
@@ -906,6 +907,7 @@ class WhisperTRT(TRTInferenceCommand):
         num_beams: int = 1,
         use_cache: bool = False,
         early_stopping: bool = True,
+        forced_decoder_ids=WhisperModelTRTConfig.FORCED_DECODER_IDS,
     ):
         batch_size = input_features.shape[0]
         hf_config = self.whisper_trt_decoder.config
@@ -917,24 +919,23 @@ class WhisperTRT(TRTInferenceCommand):
             min_length = WhisperModelTRTConfig.MIN_OUTPUT_LENGTH[self.metadata.variant]
 
         stopping_criteria = StoppingCriteriaList([MaxLengthCriteria(max_length)])
+        decoder_input_ids = torch.full(
+            (batch_size, 1),
+            WhisperModelTRTConfig.DECODER_START_TOKEN_ID,
+            dtype=torch.int32,
+        ).to("cuda")
+
+        stopping_criteria = StoppingCriteriaList([MaxLengthCriteria(max_length)])
         logits_processor = LogitsProcessorList(
             [
-                NoRepeatNGramLogitsProcessor(
-                    WhisperModelTRTConfig.NO_REPEAT_NGRAM_SIZE
+                SuppressTokensLogitsProcessor(WhisperModelTRTConfig.SUPPRESS_TOKENS),
+                SuppressTokensAtBeginLogitsProcessor(
+                    WhisperModelTRTConfig.BEGIN_SUPPRESS_TOKENS,
+                    decoder_input_ids.shape[-1],
                 ),
-                MinLengthLogitsProcessor(
-                    min_length, WhisperModelTRTConfig.EOS_TOKEN_ID
-                ),
-                ForcedBOSTokenLogitsProcessor(WhisperModelTRTConfig.DECODER_START_TOKEN_ID),
-                ForcedEOSTokenLogitsProcessor(
-                    max_length, WhisperModelTRTConfig.EOS_TOKEN_ID
-                ),
+                ForceTokensLogitsProcessor(forced_decoder_ids),
             ]
         )
-
-        decoder_input_ids = torch.full(
-            (batch_size, 1), WhisperModelTRTConfig.EOS_TOKEN_ID, dtype=torch.int32
-        ).to("cuda")
 
         if num_beams == 1:
             G_LOGGER.info("Running full inference with greedy decoding...")
@@ -1035,8 +1036,8 @@ class WhisperTRT(TRTInferenceCommand):
         decoder_output_len = output_seq_len // 2 if (not metadata.other.kv_cache) else 1
 
         decoder_input_ids = torch.full(
-            (batch_size, decoder_output_len),
-            tokenizer.convert_tokens_to_ids(tokenizer.pad_token),
+            (batch_size, 1),
+            WhisperModelTRTConfig.DECODER_START_TOKEN_ID,
             dtype=torch.int32,
         )
 
@@ -1130,9 +1131,11 @@ class WhisperTRT(TRTInferenceCommand):
         encoder_input_ids = tokenizer(
             [encoder_input] * batch_size, padding=True, return_tensors="pt"
         ).input_ids
-        decoder_input_ids = tokenizer(
-            [decoder_input] * batch_size, padding=True, return_tensors="pt"
-        ).input_ids
+        decoder_input_ids = torch.full(
+            (batch_size, 1),
+            WhisperModelTRTConfig.DECODER_START_TOKEN_ID,
+            dtype=torch.int32,
+        )
 
         perplexity = calculate_perplexity(
             self.whisper_trt_encoder,

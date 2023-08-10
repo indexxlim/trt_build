@@ -34,8 +34,6 @@ from Whisper.WhisperModelConfig import WhisperModelTRTConfig
 
 # from HuggingFace transformers
 from transformers.generation_logits_process import (
-    NoRepeatNGramLogitsProcessor,
-    MinLengthLogitsProcessor,
     LogitsProcessorList,
     SuppressTokensAtBeginLogitsProcessor,
     SuppressTokensLogitsProcessor,
@@ -161,17 +159,15 @@ def full_inference_greedy(
     )
 
     stopping_criteria = StoppingCriteriaList([MaxLengthCriteria(max_length)])
-    no_repeat_ngram_size = WhisperModelTRTConfig.NO_REPEAT_NGRAM_SIZE
     logits_processor = LogitsProcessorList(
         [
-            NoRepeatNGramLogitsProcessor(no_repeat_ngram_size),
             SuppressTokensLogitsProcessor(WhisperModelTRTConfig.SUPPRESS_TOKENS),
             SuppressTokensAtBeginLogitsProcessor(
                 WhisperModelTRTConfig.BEGIN_SUPPRESS_TOKENS, decoder_input_ids.shape[-1]
             ),
             ForceTokensLogitsProcessor(forced_decoder_ids),
         ]
-    )  # by checking HuggingFace's generate() implementation carefully, the default logits processor for BART has no_repeat_ngram_size = 3 and forced_eos_token_id = 2. In this way we can get identical results with raw HuggingFace
+    )
 
     if use_cuda:
         decoder_input_ids = decoder_input_ids.to("cuda")
@@ -243,10 +239,8 @@ def full_inference_beam(
     )
 
     stopping_criteria = StoppingCriteriaList([MaxLengthCriteria(max_length)])
-    no_repeat_ngram_size = WhisperModelTRTConfig.NO_REPEAT_NGRAM_SIZE
     logits_processor = LogitsProcessorList(
         [
-            NoRepeatNGramLogitsProcessor(no_repeat_ngram_size),
             SuppressTokensLogitsProcessor(WhisperModelTRTConfig.SUPPRESS_TOKENS),
             SuppressTokensAtBeginLogitsProcessor(
                 WhisperModelTRTConfig.BEGIN_SUPPRESS_TOKENS, decoder_input_ids.shape[-1]
