@@ -208,7 +208,7 @@ class WhisperTRTEncoder(TRTHFRunner):
     def forward(self, input_features, *args, **kwargs):
         bs = self.batch_size
         max_source_positions = self.max_source_positions
-        TRTHFRunner.ENCODER_LENGTH = input_features.shape[2]
+        #TRTHFRunner.ENCODER_LENGTH = input_features.shape[2]
         TRTHFRunner.MAX_SOURCE_POSITIONS = self.max_sequence_length
         input_length = input_features.shape[1]
         encoder_hidden_size = self.encoder_hidden_size
@@ -275,7 +275,9 @@ class WhisperTRTDecoder(TRTHFRunner):
         ):
             self.max_sequence_length = benchmarking_args.input_profile_max_len
         else:
-            self.max_sequence_length = hf_config.d_model
+            self.max_sequence_length = WhisperModelTRTConfig.MAX_SEQUENCE_LENGTH[
+                network_metadata.variant
+            ]
 
         # Similarly, the max_output_length should be the user-provided output_profile_max_len
         if (
@@ -434,7 +436,7 @@ class WhisperTRTDecoder(TRTHFRunner):
         bs = encoder_hidden_states.shape[0]
         encoder_hidden_size = self.encoder_hidden_size
         max_source_positions = self.max_source_positions
-        encoder_length = TRTHFRunner.ENCODER_LENGTH
+        #encoder_length = TRTHFRunner.ENCODER_LENGTH
         if encoder_hidden_states.device == torch.device("cpu"):
             self.inputs["encoder_hidden_states"] = (
                 encoder_hidden_states.flatten().contiguous().cuda()

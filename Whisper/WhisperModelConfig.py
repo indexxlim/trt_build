@@ -135,7 +135,7 @@ class WhisperModelTRTConfig(NNConfig):
     }
 
     MAX_SEQUENCE_LENGTH = {
-        TARGET_MODELS[0]: 384,
+        TARGET_MODELS[0]: 448,
         TARGET_MODELS[1]: 448,
         TARGET_MODELS[2]: 448,
         TARGET_MODELS[3]: 448,
@@ -147,7 +147,7 @@ class WhisperModelTRTConfig(NNConfig):
         TARGET_MODELS[1]: 512,
         TARGET_MODELS[2]: 768,
         TARGET_MODELS[3]: 1024,
-        TARGET_MODELS[3]: 1280,
+        TARGET_MODELS[4]: 1280,
     }
 
     # To achieve identical results with original HuggingFace implementation, the min_length in model config should be consistent with each model variant
@@ -196,6 +196,7 @@ class WhisperModelTRTConfig(NNConfig):
         TARGET_MODELS[1]: 51865,
         TARGET_MODELS[2]: 51865,
         TARGET_MODELS[3]: 51865,
+        TARGET_MODELS[4]: 51865,
     }
 
     SUPPRESS_TOKENS = [
