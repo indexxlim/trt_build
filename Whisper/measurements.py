@@ -149,21 +149,25 @@ def full_inference_greedy(
     use_cuda=True,
     early_stopping=False,
     use_cache=False,
-    forced_decoder_ids=WhisperModelTRTConfig.FORCED_DECODER_IDS,
+    forced_decoder_ids=None,
 ):
     G_LOGGER.info("Running full inference with greedy decoding...")
+
     decoder_input_ids = torch.full(
         (batch_size, 1),
-        WhisperModelTRTConfig.DECODER_START_TOKEN_ID,
+        Whisper_decoder.config.decoder_start_token_id,
         dtype=torch.int32,
     )
+    if forced_decoder_ids is None:
+        forced_decoder_ids = Whisper_decoder.config.forced_decoder_ids
 
     stopping_criteria = StoppingCriteriaList([MaxLengthCriteria(max_length)])
     logits_processor = LogitsProcessorList(
         [
-            SuppressTokensLogitsProcessor(WhisperModelTRTConfig.SUPPRESS_TOKENS),
+            SuppressTokensLogitsProcessor(Whisper_decoder.config.suppress_tokens),
             SuppressTokensAtBeginLogitsProcessor(
-                WhisperModelTRTConfig.BEGIN_SUPPRESS_TOKENS, decoder_input_ids.shape[-1]
+                Whisper_decoder.config.begin_suppress_tokens,
+                decoder_input_ids.shape[-1],
             ),
             ForceTokensLogitsProcessor(forced_decoder_ids),
         ]
@@ -226,7 +230,7 @@ def full_inference_beam(
     use_cuda=True,
     early_stopping=False,  # Now used to control beam search early_stopping to have the same meaning as HuggingFace
     use_cache=False,
-    forced_decoder_ids=WhisperModelTRTConfig.FORCED_DECODER_IDS,
+    forced_decoder_ids=None,
 ):
     G_LOGGER.info(
         f"Running full inference with beam search (num_beams = {num_beams}) decoding..."
@@ -234,16 +238,19 @@ def full_inference_beam(
 
     decoder_input_ids = torch.full(
         (batch_size, 1),
-        WhisperModelTRTConfig.DECODER_START_TOKEN_ID,
+        Whisper_decoder.config.decoder_start_token_id,
         dtype=torch.int32,
     )
+    if forced_decoder_ids is None:
+        forced_decoder_ids = Whisper_decoder.config.forced_decoder_ids
 
     stopping_criteria = StoppingCriteriaList([MaxLengthCriteria(max_length)])
     logits_processor = LogitsProcessorList(
         [
-            SuppressTokensLogitsProcessor(WhisperModelTRTConfig.SUPPRESS_TOKENS),
+            SuppressTokensLogitsProcessor(Whisper_decoder.config.suppress_tokens),
             SuppressTokensAtBeginLogitsProcessor(
-                WhisperModelTRTConfig.BEGIN_SUPPRESS_TOKENS, decoder_input_ids.shape[-1]
+                Whisper_decoder.config.begin_suppress_tokens,
+                decoder_input_ids.shape[-1],
             ),
             ForceTokensLogitsProcessor(forced_decoder_ids),
         ]

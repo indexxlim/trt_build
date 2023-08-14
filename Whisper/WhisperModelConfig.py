@@ -187,6 +187,7 @@ class WhisperModelTRTConfig(NNConfig):
         TARGET_MODELS[4]: 20,
     }
 
+    NB_MAX_FREMES = 3000
     NO_REPEAT_NGRAM_SIZE = 3
     DECODER_START_TOKEN_ID = 50258
     EOS_TOKEN_ID = 50257

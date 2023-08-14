@@ -208,7 +208,6 @@ class WhisperTRTEncoder(TRTHFRunner):
     def forward(self, input_features, *args, **kwargs):
         bs = self.batch_size
         max_source_positions = self.max_source_positions
-        #TRTHFRunner.ENCODER_LENGTH = input_features.shape[2]
         TRTHFRunner.MAX_SOURCE_POSITIONS = self.max_sequence_length
         input_length = input_features.shape[1]
         encoder_hidden_size = self.encoder_hidden_size
@@ -227,7 +226,7 @@ class WhisperTRTEncoder(TRTHFRunner):
             self.bindings[0] = self.inputs["input_features"].data_ptr()
         else:
             self.inputs["input_features"][
-                : bs * input_length * TRTHFRunner.ENCODER_LENGTH
+                : bs * input_length * WhisperModelTRTConfig.NB_MAX_FREMES
             ] = input_features.flatten()
 
         # Set the binding shape of input_features, which should be (bs, input_length).
@@ -436,7 +435,6 @@ class WhisperTRTDecoder(TRTHFRunner):
         bs = encoder_hidden_states.shape[0]
         encoder_hidden_size = self.encoder_hidden_size
         max_source_positions = self.max_source_positions
-        #encoder_length = TRTHFRunner.ENCODER_LENGTH
         if encoder_hidden_states.device == torch.device("cpu"):
             self.inputs["encoder_hidden_states"] = (
                 encoder_hidden_states.flatten().contiguous().cuda()
@@ -909,30 +907,33 @@ class WhisperTRT(TRTInferenceCommand):
         num_beams: int = 1,
         use_cache: bool = False,
         early_stopping: bool = True,
-        forced_decoder_ids=WhisperModelTRTConfig.FORCED_DECODER_IDS,
+        forced_decoder_ids=None,
     ):
         batch_size = input_features.shape[0]
         hf_config = self.whisper_trt_decoder.config
 
         if max_length is None:
-            max_length = WhisperModelTRTConfig.MAX_OUTPUT_LENGTH[self.metadata.variant]
+            max_length = self.config.max_length
 
         if min_length is None:
-            min_length = WhisperModelTRTConfig.MIN_OUTPUT_LENGTH[self.metadata.variant]
+            min_length = 0
+
+        if forced_decoder_ids is None:
+            forced_decoder_ids = self.config.forced_decoder_ids
 
         stopping_criteria = StoppingCriteriaList([MaxLengthCriteria(max_length)])
         decoder_input_ids = torch.full(
             (batch_size, 1),
-            WhisperModelTRTConfig.DECODER_START_TOKEN_ID,
+            self.config.decoder_start_token_id,
             dtype=torch.int32,
         ).to("cuda")
 
         stopping_criteria = StoppingCriteriaList([MaxLengthCriteria(max_length)])
         logits_processor = LogitsProcessorList(
             [
-                SuppressTokensLogitsProcessor(WhisperModelTRTConfig.SUPPRESS_TOKENS),
+                SuppressTokensLogitsProcessor(self.config.suppress_tokens),
                 SuppressTokensAtBeginLogitsProcessor(
-                    WhisperModelTRTConfig.BEGIN_SUPPRESS_TOKENS,
+                    self.config.begin_suppress_tokens,
                     decoder_input_ids.shape[-1],
                 ),
                 ForceTokensLogitsProcessor(forced_decoder_ids),
@@ -1182,7 +1183,7 @@ class WhisperTRT(TRTInferenceCommand):
         # non-benchmarking mode: opt profile length is by default half of the max profile
         # benchmarking mode: user can specify opt and max profile by flags. If no additional benchmarking flags are provided, it will just use the non-benchmarking mode defaults
         max_sequence_length = hf_config.d_model
-        max_output_length = WhisperModelTRTConfig.MAX_OUTPUT_LENGTH[metadata.variant]
+        max_output_length = hf_config.max_length
         opt_input_seq_len = max_sequence_length // 2
         opt_output_seq_len = max_output_length // 2
 
