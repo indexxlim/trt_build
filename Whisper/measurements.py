@@ -65,7 +65,7 @@ def decoder_inference(
         whisper_decoder.set_return_device("cuda" if use_cuda else "cpu")
 
     def decoder_stmt():
-        whisper_decoder(
+        return whisper_decoder(
             input_ids=input_ids,
             encoder_hidden_states=encoder_last_hidden_state,
             use_cache=use_cache,

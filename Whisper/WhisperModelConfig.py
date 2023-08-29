@@ -127,9 +127,9 @@ class WhisperModelTRTConfig(NNConfig):
     }
 
     MAX_DECODER_WORKSPACE_MB = {
-        TARGET_MODELS[0]: 1024,
-        TARGET_MODELS[1]: 1024,
-        TARGET_MODELS[2]: 2048,
+        TARGET_MODELS[0]: 2048,
+        TARGET_MODELS[1]: 2048,
+        TARGET_MODELS[2]: 3072,
         TARGET_MODELS[3]: 3072,
         TARGET_MODELS[4]: 4096,
     }
