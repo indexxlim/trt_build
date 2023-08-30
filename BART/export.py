@@ -118,7 +118,7 @@ class BARTDecoderTorchFile(TorchModelFile):
         def __init__(self, decoder, lm_head, final_logits_bias, config):
             super().__init__()
             self.decoder = decoder
-            self.lm_head = lm_head
+            self.lm_head = lm_head  
             self.bias = final_logits_bias
             self.config = config
 

@@ -199,7 +199,7 @@ class WhisperTRTEncoder(TRTHFRunner):
                 self.encoder_hidden_size,
             )
         }
-        self.output_types = {"hidden_states": self.data_type}
+        self.output_types = {"hidden_states": self.float32}
 
         self.bindings = self._allocate_memory(
             self.input_shapes, self.input_types, self.output_shapes, self.output_types
