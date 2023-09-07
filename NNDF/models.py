@@ -122,13 +122,19 @@ class ModelFileConverter:
             self.trt_inference_config = CreateConfig(
                 tf32=True,
                 fp16=network_metadata.precision.fp16,
-                memory_pool_limits = {MemoryPoolType.WORKSPACE: result.max_trt_workspace * 1024 * 1024},
+                memory_pool_limits={
+                    MemoryPoolType.WORKSPACE: result.max_trt_workspace * 1024 * 1024
+                },
                 profiles=profiles,
-                precision_constraints=("obey" if result.use_obey_precision_constraints() else None),
-                preview_features=preview_features
+                precision_constraints=(
+                    "obey" if result.use_obey_precision_constraints() else None
+                ),
+                preview_features=preview_features,
             )
         except TypeError as e:
-            G_LOGGER.error(f"This demo may have an outdated polygraphy. Please see requirements.txt for more details.")
+            G_LOGGER.error(
+                f"This demo may have an outdated polygraphy. Please see requirements.txt for more details."
+            )
             raise e
 
         if G_LOGGER.level == G_LOGGER.DEBUG:
@@ -139,7 +145,9 @@ class ModelFileConverter:
             g_logger_verbosity = PG_LOGGER.WARNING
 
         with PG_LOGGER.verbosity(g_logger_verbosity):
-            network_definition = result.get_network_definition(network_from_onnx_path(input_fpath))
+            network_definition = result.get_network_definition(
+                network_from_onnx_path(input_fpath)
+            )
 
             trt_engine = engine_from_network(
                 network_definition, config=self.trt_inference_config
@@ -228,7 +236,7 @@ class NNModelFile(metaclass=ABCMeta):
         converter: ModelFileConverter = None,
         force_overwrite: bool = False,
         profiles: List[Profile] = [],
-        preview_features: List[PreviewFeature] = []
+        preview_features: List[PreviewFeature] = [],
     ):
         """
         Converts current model into an TRT engine.
@@ -355,7 +363,9 @@ class TorchModelFile(NNModelFile):
             del self.model
 
         if self.fpath:
-            G_LOGGER.debug("Removing saved torch model from location: {}".format(self.fpath))
+            G_LOGGER.debug(
+                "Removing saved torch model from location: {}".format(self.fpath)
+            )
             rmtree(self.fpath)
 
 
@@ -451,8 +461,8 @@ class ONNXModelFile(NNModelFile):
         output_fpath: str,
         converter: ModelFileConverter = None,
         force_overwrite: bool = False,
-        profiles = [],
-        preview_features = []
+        profiles=[],
+        preview_features=[],
     ):
         """
         Converts the onnx model into an trt engine.
@@ -474,16 +484,11 @@ class ONNXModelFile(NNModelFile):
             return converter.trt_engine_class(output_fpath, self.network_metadata)
 
         return converter.onnx_to_trt(
-            output_fpath,
-            self.fpath,
-            self.network_metadata,
-            profiles,
-            preview_features
+            output_fpath, self.fpath, self.network_metadata, profiles, preview_features
         )
 
 
 class TRTEngineFile(NNModelFile):
-
     @abstractmethod
     def use_obey_precision_constraints(self):
         pass
@@ -505,7 +510,9 @@ class TRTEngineFile(NNModelFile):
         self.max_trt_workspace = 3072
 
     def cleanup(self) -> None:
-        G_LOGGER.debug("Removing saved engine model from location: {}".format(self.fpath))
+        G_LOGGER.debug(
+            "Removing saved engine model from location: {}".format(self.fpath)
+        )
         os.remove(self.fpath)
 
 

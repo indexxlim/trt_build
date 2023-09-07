@@ -18,7 +18,7 @@
 import os
 import sys
 import copy
-from typing import Dict, List, Tuple, Union
+from typing import Dict, List, Tuple, Union, Any
 from functools import reduce
 
 # Add syspath for custom library
@@ -199,7 +199,7 @@ class WhisperTRTEncoder(TRTHFRunner):
                 self.encoder_hidden_size,
             )
         }
-        self.output_types = {"hidden_states": self.float32}
+        self.output_types = {"hidden_states": self.data_type}
 
         self.bindings = self._allocate_memory(
             self.input_shapes, self.input_types, self.output_shapes, self.output_types
@@ -852,6 +852,14 @@ class WhisperTRTDecoder(TRTHFRunner):
             ret["past_key_values"] = past
 
         return ret
+
+    def _prepare_encoder_decoder_kwargs_for_generation(
+        self, model_kwargs
+    ) -> Dict[str, Any]:
+        model_kwargs["encoder_outputs"] = BaseModelOutput(
+            last_hidden_state=model_kwargs["encoder_hidden_states"]
+        )
+        return model_kwargs
 
     def reset(self):
         """
