@@ -16,6 +16,10 @@ Currently, this repository supports the following models:
 
     facebook/bart-base (139M), facebook/bart-large (406M), facebook/bart-large-cnn (406M), facebook/mbart-large-50 (680M)
 
+4. [Whisper (auto speech recognition task)](https://huggingface.co/openai/whisper-large-v2). The sample supports the following variants of Whisper:
+
+    openai/whisper-large-v2, ~openai/whisper-large-v3~
+
 ## Setup
 
 
