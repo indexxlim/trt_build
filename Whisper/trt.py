@@ -221,7 +221,7 @@ class WhisperTRTEncoder(TRTHFRunner):
         # avoid an additional D2D?
         if is_cpu_mode:
             self.inputs["input_features"] = (
-                input_features.int().flatten().contiguous().cuda()
+                input_features.float().flatten().contiguous().cuda()
             )
             self.bindings[0] = self.inputs["input_features"].data_ptr()
         else:
