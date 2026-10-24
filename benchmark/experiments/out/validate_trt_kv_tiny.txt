@@ -1,0 +1,39 @@
+[10/24/2026-23:11:03] [TRT] [W] onnx2trt_utils.cpp:374: Your ONNX model has been generated with INT64 weights, while TensorRT does not natively support INT64. Attempting to cast down to INT32.
+[10/24/2026-23:11:36] [TRT] [W] onnx2trt_utils.cpp:374: Your ONNX model has been generated with INT64 weights, while TensorRT does not natively support INT64. Attempting to cast down to INT32.
+[10/24/2026-23:12:34] [TRT] [W] onnx2trt_utils.cpp:374: Your ONNX model has been generated with INT64 weights, while TensorRT does not natively support INT64. Attempting to cast down to INT32.
+[10/24/2026-23:13:21] [TRT] [W] onnx2trt_utils.cpp:374: Your ONNX model has been generated with INT64 weights, while TensorRT does not natively support INT64. Attempting to cast down to INT32.
+[10/24/2026-23:14:15] [TRT] [W] TensorRT encountered issues when converting weights between types and that could affect accuracy.
+[10/24/2026-23:14:15] [TRT] [W] If this is not the desired behavior, please modify the weights or retrain with regularization to adjust the magnitude of the weights.
+[10/24/2026-23:14:15] [TRT] [W] Check verbose logs for the list of affected weights.
+[10/24/2026-23:14:15] [TRT] [W] - 43 weights are affected by this issue: Detected subnormal FP16 values.
+[10/24/2026-23:14:24] [TRT] [W] onnx2trt_utils.cpp:374: Your ONNX model has been generated with INT64 weights, while TensorRT does not natively support INT64. Attempting to cast down to INT32.
+[10/24/2026-23:15:44] [TRT] [W] TensorRT encountered issues when converting weights between types and that could affect accuracy.
+[10/24/2026-23:15:44] [TRT] [W] If this is not the desired behavior, please modify the weights or retrain with regularization to adjust the magnitude of the weights.
+[10/24/2026-23:15:44] [TRT] [W] Check verbose logs for the list of affected weights.
+[10/24/2026-23:15:44] [TRT] [W] - 43 weights are affected by this issue: Detected subnormal FP16 values.
+[10/24/2026-23:15:53] [TRT] [W] onnx2trt_utils.cpp:374: Your ONNX model has been generated with INT64 weights, while TensorRT does not natively support INT64. Attempting to cast down to INT32.
+[10/24/2026-23:17:10] [TRT] [W] TensorRT encountered issues when converting weights between types and that could affect accuracy.
+[10/24/2026-23:17:10] [TRT] [W] If this is not the desired behavior, please modify the weights or retrain with regularization to adjust the magnitude of the weights.
+[10/24/2026-23:17:10] [TRT] [W] Check verbose logs for the list of affected weights.
+[10/24/2026-23:17:10] [TRT] [W] - 43 weights are affected by this issue: Detected subnormal FP16 values.
+/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/transformers/models/whisper/modeling_whisper.py:200: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if attn_weights.size() != (bsz * self.num_heads, tgt_len, src_len):
+/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/transformers/models/whisper/modeling_whisper.py:239: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if attn_output.size() != (bsz * self.num_heads, tgt_len, self.head_dim):
+static torch step vs HF logits: max|diff| 2.48e-05
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+fp32 graph=False: match_hf=True | 127 toks | 92.5 ms
+fp32 graph=True: match_hf=True | 127 toks | 66.9 ms
+fp16 graph=False: match_hf=True | 127 toks | 91.6 ms
+fp16 graph=True: match_hf=True | 127 toks | 72.3 ms

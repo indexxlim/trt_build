@@ -1,0 +1,43 @@
+{
+  "name": "hf_transformers",
+  "precision": "fp16",
+  "variant": "openai/whisper-large-v2",
+  "time": "2026-10-23T20:55:36",
+  "gpu_index": "2",
+  "nvidia_smi": "NVIDIA A100-SXM4-80GB, 9579 MiB, 81920 MiB, 4 %",
+  "samples": {
+    "en": {
+      "text": " Mr. Quilter is the apostle of the middle classes and we are glad to welcome his gospel.",
+      "n_tokens": 22,
+      "encoder": {
+        "p50": 49.031266709789634,
+        "p99": 59.770827763713896,
+        "min": 47.969378996640444
+      },
+      "e2e": {
+        "p50": 562.2034904081374,
+        "p99": 574.516318696551,
+        "min": 556.1081152409315
+      },
+      "match_hf": true,
+      "cer_vs_hf": 0.0
+    },
+    "ko": {
+      "text": " 제6호 태풍 카누는 여전히 매우 강한 세력을 유지한 채 북서지나고 있습니다. 하지만 이동 속도가 점점 느려져 거의 정체하는 모습입니다. 태풍은 동중국해에 머물다 동쪽으로 방향을 급격히 틀어 이동할 걸로 보입니다. 속도도 조금씩 빨라지며 다음 주 초중반에는 일본 규슈 남쪽 해상까지 진출하겠습니다. 세력도 크게 약화하지는 않을 전망입니다.",
+      "n_tokens": 126,
+      "encoder": {
+        "p50": 47.49348573386669,
+        "p99": 53.165782978758216,
+        "min": 47.17138083651662
+      },
+      "e2e": {
+        "p50": 2712.4605232384056,
+        "p99": 2760.300960247405,
+        "min": 2696.8038342893124
+      },
+      "match_hf": true,
+      "cer_vs_hf": 0.0
+    }
+  },
+  "env": "conda trt (py3.8, torch 2.0.1, TRT 8.6.1, transformers 4.24, torch-tensorrt 1.4.0)"
+}

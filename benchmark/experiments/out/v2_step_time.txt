@@ -1,0 +1,2 @@
+v2 graph replay (= decoder 1 step) GPU time: 5.384 ms/step (126 steps 연속, 프로파일러 없음)
+v2 encoder: 17.12 ms

@@ -1,0 +1,20 @@
+Total Time (ns),Num Calls,Name
+10440871,2078,cudaMemcpyAsync
+427956,419,cudaPointerGetAttributes
+2166681,23917,cudaGetDeviceCount
+104338855,21094,cudaLaunchKernel
+10831,2,cuLaunchKernelEx
+199,1,cudaPeekAtLastError
+8799514,23500,cudaStreamIsCapturing
+93268100,20313,cuLaunchKernel
+677542,224,cudaFuncSetAttribute
+10721,1,cudaMallocFromPoolAsync
+755561,933,cudaEventRecord
+775674,830,cudaStreamWaitEvent
+1139569,208,cudaMemcpy2DAsync
+643379,109,cudaMemsetAsync
+4016776,13424,cudaDeviceGetAttribute
+33049556,6616,cudaLaunchKernelExC
+13655,1,cudaFreeAsync
+264145971,103,cudaEventSynchronize
+14479866,16460,cudaOccupancyMaxActiveBlocksPerMultiprocessorWithFlags

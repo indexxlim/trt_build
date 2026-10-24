@@ -1,0 +1,2 @@
+[profile] cprofile e2e:ko -> benchmark/profiling/nndf-nonkv-fp16
+[profile] nndf_trt_nonkv fp16: 프로파일링 실행이라 results/ 저장 생략

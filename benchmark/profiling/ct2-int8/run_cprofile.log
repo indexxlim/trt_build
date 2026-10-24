@@ -1,0 +1,2 @@
+[profile] cprofile e2e:ko -> benchmark/profiling/ct2-int8
+[profile] ctranslate2 int8_float16: 프로파일링 실행이라 results/ 저장 생략

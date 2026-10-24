@@ -1,0 +1,91 @@
+# e2e:ko: wall 886.1 ms (cProfile 오버헤드 포함)
+
+## sort by tottime (함수 자체 시간)
+         6510 function calls in 0.886 seconds
+
+   Ordered by: internal time
+   List reduced from 76 to 30 due to restriction <30>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+      129    0.843    0.007    0.843    0.007 {function Event.synchronize at 0x7fcb4a0bb5e0}
+      135    0.016    0.000    0.016    0.000 {method 'copy_' of 'torch._C._TensorBase' objects}
+        1    0.016    0.016    0.016    0.016 {function Stream.synchronize at 0x7fcb4a0b7ee0}
+      131    0.003    0.000    0.003    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/graphs.py:81(replay)
+        1    0.003    0.003    0.003    0.003 /home/klcube/lim/trt_build/Whisper/trt_kv.py:281(__call__)
+        1    0.002    0.002    0.886    0.886 /home/klcube/lim/trt_build/Whisper/trt_kv.py:550(generate)
+      133    0.000    0.000    0.003    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/__init__.py:704(current_stream)
+      135    0.000    0.000    0.002    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/_utils.py:7(_get_device_index)
+      131    0.000    0.000    0.000    0.000 {function Event.record at 0x7fcb4a0bb3a0}
+      131    0.000    0.000    0.003    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/streams.py:173(record)
+      135    0.000    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/_utils.py:692(_get_device_index)
+      133    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/streams.py:31(__new__)
+      133    0.000    0.000    0.000    0.000 {built-in method __new__ of type object at 0x70d560}
+      136    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/os.py:670(__getitem__)
+      135    0.000    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/_utils.py:656(_get_device_attr)
+      136    0.000    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/__init__.py:94(is_available)
+      136    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/_collections_abc.py:657(get)
+     1081    0.000    0.000    0.000    0.000 {built-in method builtins.isinstance}
+      269    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/__init__.py:219(_lazy_init)
+      135    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/__init__.py:672(current_device)
+      269    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/__init__.py:176(is_initialized)
+      136    0.000    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/__init__.py:91(_nvml_based_avail)
+      129    0.000    0.000    0.843    0.007 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/streams.py:210(synchronize)
+      136    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/os.py:748(encode)
+      135    0.000    0.000    0.000    0.000 {built-in method torch._C._cuda_getDevice}
+      133    0.000    0.000    0.000    0.000 {built-in method torch._C._cuda_getCurrentStream}
+      135    0.000    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/_utils.py:647(_get_available_device_type)
+      135    0.000    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/_utils.py:666(_get_current_device_index)
+      136    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/os.py:766(getenv)
+        1    0.000    0.000    0.000    0.000 {method 'tolist' of 'torch._C._TensorBase' objects}
+
+
+
+## sort by cumtime (하위 호출 포함)
+         6510 function calls in 0.886 seconds
+
+   Ordered by: cumulative time
+   List reduced from 76 to 40 due to restriction <40>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.886    0.886 benchmark/nndf_legacy/bench.py:220(<lambda>)
+        1    0.000    0.000    0.886    0.886 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/utils/_contextlib.py:112(decorate_context)
+        1    0.002    0.002    0.886    0.886 /home/klcube/lim/trt_build/Whisper/trt_kv.py:550(generate)
+      129    0.000    0.000    0.843    0.007 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/streams.py:210(synchronize)
+      129    0.843    0.007    0.843    0.007 {function Event.synchronize at 0x7fcb4a0bb5e0}
+      135    0.016    0.000    0.016    0.000 {method 'copy_' of 'torch._C._TensorBase' objects}
+        1    0.000    0.000    0.016    0.016 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/streams.py:92(synchronize)
+        1    0.016    0.016    0.016    0.016 {function Stream.synchronize at 0x7fcb4a0b7ee0}
+        1    0.000    0.000    0.015    0.015 /home/klcube/lim/trt_build/Whisper/trt_kv.py:534(_reset)
+      131    0.003    0.000    0.003    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/graphs.py:81(replay)
+      131    0.000    0.000    0.003    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/streams.py:173(record)
+        1    0.000    0.000    0.003    0.003 /home/klcube/lim/trt_build/Whisper/trt_kv.py:547(encode)
+        1    0.003    0.003    0.003    0.003 /home/klcube/lim/trt_build/Whisper/trt_kv.py:281(__call__)
+      133    0.000    0.000    0.003    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/__init__.py:704(current_stream)
+      135    0.000    0.000    0.002    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/_utils.py:7(_get_device_index)
+      135    0.000    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/_utils.py:692(_get_device_index)
+      135    0.000    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/_utils.py:666(_get_current_device_index)
+      135    0.000    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/_utils.py:656(_get_device_attr)
+      135    0.000    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/_utils.py:647(_get_available_device_type)
+      136    0.000    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/__init__.py:94(is_available)
+      136    0.000    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/__init__.py:91(_nvml_based_avail)
+      136    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/os.py:766(getenv)
+      136    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/_collections_abc.py:657(get)
+      133    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/streams.py:31(__new__)
+      135    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/_utils.py:668(<lambda>)
+      136    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/os.py:670(__getitem__)
+      135    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/__init__.py:672(current_device)
+      269    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/__init__.py:219(_lazy_init)
+      131    0.000    0.000    0.000    0.000 {function Event.record at 0x7fcb4a0bb3a0}
+      133    0.000    0.000    0.000    0.000 {built-in method __new__ of type object at 0x70d560}
+      269    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/__init__.py:176(is_initialized)
+      136    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/os.py:748(encode)
+     1081    0.000    0.000    0.000    0.000 {built-in method builtins.isinstance}
+      136    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/cuda/__init__.py:87(_is_compiled)
+      135    0.000    0.000    0.000    0.000 {built-in method torch._C._cuda_getDevice}
+      133    0.000    0.000    0.000    0.000 {built-in method torch._C._cuda_getCurrentStream}
+        1    0.000    0.000    0.000    0.000 {method 'tolist' of 'torch._C._TensorBase' objects}
+      269    0.000    0.000    0.000    0.000 {built-in method torch._C._cuda_isInBadFork}
+        1    0.000    0.000    0.000    0.000 /home/klcube/lim/trt_build/benchmark/common.py:40(_sync)
+      136    0.000    0.000    0.000    0.000 {built-in method torch._C._cuda_getDeviceCount}
+
+

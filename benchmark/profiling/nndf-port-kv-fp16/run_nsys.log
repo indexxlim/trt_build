@@ -1,0 +1,14 @@
+WARNING: CPU IP/backtrace sampling not supported, disabling.
+Try the 'nsys status --environment' command to learn more.
+
+WARNING: CPU context switch tracing not supported, disabling.
+Try the 'nsys status --environment' command to learn more.
+
+Capture range started in the application.
+Generating '/tmp/nsys-report-2ae7.qdstrm'
+Capture range ended in the application.
+[1/1] [0%                          ] nsys.nsys-rep[1/1] [0%                          ] nsys.nsys-rep[1/1] [8%                          ] nsys.nsys-rep[1/1] [=16%                        ] nsys.nsys-rep[1/1] [11%                         ] nsys.nsys-rep[1/1] [9%                          ] nsys.nsys-rep[1/1] [7%                          ] nsys.nsys-rep[1/1] [6%                          ] nsys.nsys-rep[1/1] [5%                          ] nsys.nsys-rep[1/1] [5%                          ] nsys.nsys-rep[1/1] [7%                          ] nsys.nsys-rep[1/1] [8%                          ] nsys.nsys-rep[1/1] [10%                         ] nsys.nsys-rep[1/1] [11%                         ] nsys.nsys-rep[1/1] [13%                         ] nsys.nsys-rep[1/1] [14%                         ] nsys.nsys-rep[1/1] [=16%                        ] nsys.nsys-rep[1/1] [=17%                        ] nsys.nsys-rep[1/1] [==19%                       ] nsys.nsys-rep[1/1] [==20%                       ] nsys.nsys-rep[1/1] [===22%                      ] nsys.nsys-rep[1/1] [===24%                      ] nsys.nsys-rep[1/1] [====26%                     ] nsys.nsys-rep[1/1] [=====29%                    ] nsys.nsys-rep[1/1] [=====31%                    ] nsys.nsys-rep[1/1] [======33%                   ] nsys.nsys-rep[1/1] [======35%                   ] nsys.nsys-rep[1/1] [=======36%                  ] nsys.nsys-rep[1/1] [=======38%                  ] nsys.nsys-rep[1/1] [=======39%                  ] nsys.nsys-rep[1/1] [========41%                 ] nsys.nsys-rep[1/1] [=========43%                ] nsys.nsys-rep[1/1] [=========46%                ] nsys.nsys-rep[1/1] [==========48%               ] nsys.nsys-rep[1/1] [===========50%              ] nsys.nsys-rep[1/1] [===========53%              ] nsys.nsys-rep[1/1] [============55%             ] nsys.nsys-rep[1/1] [============57%             ] nsys.nsys-rep[1/1] [=============60%            ] nsys.nsys-rep[1/1] [==============62%           ] nsys.nsys-rep[1/1] [==================76%       ] nsys.nsys-rep[1/1] [========================100%] nsys.nsys-rep[1/1] [========================100%] nsys.nsys-rep
+[profile] nsys e2e:ko -> benchmark/profiling/nndf-port-kv-fp16
+[profile] nndf_port_trt_kv fp16: 프로파일링 실행이라 results/ 저장 생략
+Generated:
+    /home/klcube/lim/trt_build/benchmark/profiling/nndf-port-kv-fp16/nsys.nsys-rep

@@ -1,0 +1,980 @@
+WARNING: CPU IP/backtrace sampling not supported, disabling.
+Try the 'nsys status --environment' command to learn more.
+
+WARNING: CPU context switch tracing not supported, disabling.
+Try the 'nsys status --environment' command to learn more.
+
+/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch_tensorrt/fx/tracer/acc_tracer/acc_ops.py:847: UserWarning: Unable to import torchvision related libraries.: No module named 'torchvision'. Please install torchvision lib in order to lower stochastic_depth
+  warnings.warn(
+[2026-10-24 17:04:29,048] torch._dynamo.symbolic_convert: [INFO] Step 1: torchdynamo start tracing forward
+[2026-10-24 17:04:31,678] torch._dynamo.symbolic_convert: [INFO] Step 1: torchdynamo done tracing forward (RETURN_VALUE)
+[2026-10-24 17:04:31,748] torch._dynamo.output_graph: [INFO] Step 2: calling compiler function torch_tensorrt_backend
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002215
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:05.124331
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001802
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:04.738187
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002325
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:04.892675
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001815
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.443190
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001505
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.273749
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001904
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:04.702367
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.003080
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.571551
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001777
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.419159
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001776
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.665557
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002281
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.404448
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001718
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.437958
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001502
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.266940
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001808
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.601252
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002710
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.578448
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001686
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.416004
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001582
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.649965
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002072
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.394851
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001687
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.470813
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001468
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.271164
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001759
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.606785
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002629
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.575360
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001694
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.414415
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001584
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.653141
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002079
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.400290
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001694
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.410759
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001472
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.278286
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001787
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.603460
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002680
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.566252
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001723
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.458682
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001605
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.692072
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002112
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.432040
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001729
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.432177
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001902
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.276151
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001996
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.601872
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002732
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.577640
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001713
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.415249
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001612
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.656064
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002088
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.397763
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001685
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.420631
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001511
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.276400
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001777
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.615722
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002722
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.574149
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002068
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.417106
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001772
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.663275
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002089
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.397089
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001694
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.430894
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001477
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.298131
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001797
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.632183
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002687
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.571927
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001712
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.423686
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001606
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.694423
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002065
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.402268
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001731
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.423144
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001494
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.280650
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002189
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.605403
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002791
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.569272
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001718
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.415997
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001588
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.677736
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002092
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.398096
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001666
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.421266
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001481
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.283041
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001815
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.613734
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002687
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.576155
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001683
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.424742
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001598
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.661911
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002084
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.407281
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001718
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.436114
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001884
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.294195
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001823
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.622207
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002842
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.573956
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001735
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.422241
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002407
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.675280
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002123
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.395320
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001700
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.430302
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001455
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.285459
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001808
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.629287
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002901
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.571721
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001703
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.430136
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001613
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.677919
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002062
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.432730
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001698
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.428648
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001479
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.275568
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001872
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.610568
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002851
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.564137
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001679
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.429788
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001981
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.666116
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002201
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.402029
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001764
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.434314
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001475
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.294513
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001872
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.625336
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002664
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.590420
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001691
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.445976
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001577
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.672159
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002070
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.397688
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001917
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.446938
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001469
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.287008
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001762
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.605314
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002642
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.588562
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001695
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.438766
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001634
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.670808
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002093
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.400192
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001700
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.440262
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001459
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.283765
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001802
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.629506
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002744
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.579535
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001990
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.428233
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001767
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.678264
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002124
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.399001
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001715
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.426919
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001466
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.283383
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001831
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.615097
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002740
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.585106
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001711
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.432239
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001567
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.682705
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002055
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.412576
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001678
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.432099
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001465
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.294251
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001779
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.613617
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002639
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.592523
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001706
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.449325
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001657
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.656290
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002083
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.403159
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001701
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.437172
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001474
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.285667
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001826
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.619530
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002748
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.597708
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001700
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.434049
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001649
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.671800
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002075
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.407702
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001713
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.445403
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001845
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.303237
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001949
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.617380
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002664
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.579488
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001856
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.426052
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001587
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.674796
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002077
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.398244
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001685
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.431804
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001466
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.290005
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001806
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.612361
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002686
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.598522
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001721
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.430493
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001581
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.663258
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002108
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.420497
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001714
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.438461
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001558
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.288931
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001857
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.621213
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002692
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.589135
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001712
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.429885
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001581
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.672485
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002082
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.440099
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001698
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.486565
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001542
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.330498
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001852
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.649286
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.003167
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.597513
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001826
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.454695
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001627
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.700312
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002091
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.406715
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001828
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.442852
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001521
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.309049
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001830
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.645651
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002710
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.597026
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002091
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.433720
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001763
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.675619
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002389
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.407905
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001785
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.428579
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001504
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.294824
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001856
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.637973
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002699
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.622229
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001722
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.475970
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001592
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.732351
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002126
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.421355
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002246
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.453906
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001671
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.299336
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001859
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.617481
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002694
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.580266
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001731
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.430918
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001639
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.662997
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002114
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.407143
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001717
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.452711
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001904
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.293516
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001817
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.621941
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002714
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.611185
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001763
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.448218
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001972
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.682109
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002223
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.406052
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001776
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.450889
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001524
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.286285
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001819
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.616296
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002683
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.575165
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001697
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.461048
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001621
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.678180
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002104
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.407481
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001717
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.439481
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001518
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.289872
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001832
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.623412
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002802
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.584629
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001715
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.441695
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001608
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.699150
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002419
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.408703
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001968
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.433122
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001504
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.295854
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001834
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.621545
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002641
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.588749
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001755
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.433517
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001619
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.670861
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002062
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.407656
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001767
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.441726
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001867
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.294631
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001991
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.615991
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002681
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.600848
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001760
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.435047
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001621
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.671000
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002063
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.411763
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001747
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.437737
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001512
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.282115
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001820
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.660448
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002708
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.591842
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001747
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.439790
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001985
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.698269
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002248
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.417434
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001770
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.431690
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001531
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.283049
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001834
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.614696
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002763
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.579533
+ERROR:torch_tensorrt.dynamo.backend.backends:FX2TRT conversion failed on the subgraph. See trace above. Returning GraphModule forward instead.
+Traceback (most recent call last):
+  File "/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch_tensorrt/dynamo/backend/backends.py", line 74, in _pretraced_backend
+    trt_compiled = _compile_module(
+  File "/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch_tensorrt/dynamo/backend/backends.py", line 134, in _compile_module
+    trt_mod = convert_module(
+  File "/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch_tensorrt/dynamo/backend/conversion.py", line 34, in convert_module
+    r = interp.run(
+  File "/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch_tensorrt/fx/fx2trt.py", line 204, in run
+    super().run()
+  File "/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/fx/interpreter.py", line 136, in run
+    self.env[node] = self.run_node(node)
+  File "/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch_tensorrt/fx/fx2trt.py", line 275, in run_node
+    trt_node = super().run_node(n)
+  File "/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/fx/interpreter.py", line 177, in run_node
+    return getattr(self, n.op)(n.target, args, kwargs)
+  File "/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch_tensorrt/fx/fx2trt.py", line 328, in call_function
+    return converter(self.network, target, args, kwargs, self._cur_node_name)
+  File "/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch_tensorrt/fx/converters/aten_ops_converters.py", line 133, in aten_ops_convolution
+    return acc_ops_converters.acc_ops_conv1d(
+  File "/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch_tensorrt/fx/converters/acc_ops_converters.py", line 119, in acc_ops_conv1d
+    raise RuntimeError(
+RuntimeError: linear convolution_1 has bias of type <class 'tensorrt_bindings.tensorrt.ITensor'>, Expect Optional[Tensor]
+
+While executing %convolution_1 : [#users=2] = call_function[target=torch.ops.aten.convolution.default](args = (%mul_2, %arg3_1, %arg4_1, [2], [1], [1], False, [0], 1), kwargs = {_itensor_to_tensor_meta: {<tensorrt_bindings.tensorrt.ITensor object at 0x7f1888659c30>: ((1, 1280, 3000), torch.float32, False, (3840000, 3000, 1), torch.contiguous_format, False, {}), <tensorrt_bindings.tensorrt.ITensor object at 0x7f18886598f0>: ((1, 1280, 3000), torch.float32, False, (3840000, 3000, 1), torch.contiguous_format, False, {}), <tensorrt_bindings.tensorrt.ITensor object at 0x7f1888659b70>: ((1, 1280, 3000), torch.float32, False, (3840000, 3000, 1), torch.contiguous_format, False, {}), <tensorrt_bindings.tensorrt.ITensor object at 0x7f1888659af0>: ((1, 1280, 3000), torch.float32, False, (3840000, 3000, 1), torch.contiguous_format, False, {}), <tensorrt_bindings.tensorrt.ITensor object at 0x7f18886620b0>: ((1, 1280, 3000), torch.float32, False, (3840000, 3000, 1), torch.contiguous_format, False, {}), <tensorrt_bindings.tensorrt.ITensor object at 0x7f1888662230>: ((1280, 1280, 3), torch.float32, True, (3840, 3, 1), torch.contiguous_format, False, {}), <tensorrt_bindings.tensorrt.ITensor object at 0x7f18886624b0>: ((1280,), torch.float32, True, (1,), torch.contiguous_format, False, {})}})
+Original traceback:
+  File "/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/transformers/models/whisper/modeling_whisper.py", line 648, in forward
+    inputs_embeds = nn.functional.gelu(self.conv2(inputs_embeds))
+
+[2026-10-24 17:07:16,773] torch._dynamo.output_graph: [INFO] Step 2: done compiler function torch_tensorrt_backend
+[2026-10-24 17:07:16,992] torch._dynamo.symbolic_convert: [INFO] Step 1: torchdynamo start tracing is_tensor
+[2026-10-24 17:07:16,996] torch._dynamo.symbolic_convert: [INFO] Step 1: torchdynamo start tracing is_torch_fx_proxy
+[2026-10-24 17:07:17,685] torch._dynamo.symbolic_convert: [INFO] Step 1: torchdynamo start tracing forward
+[2026-10-24 17:07:20,374] torch._dynamo.symbolic_convert: [INFO] Step 1: torchdynamo done tracing forward (RETURN_VALUE)
+[2026-10-24 17:07:20,442] torch._dynamo.output_graph: [INFO] Step 2: calling compiler function torch_tensorrt_backend
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002006
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.423048
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002032
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.666614
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002240
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.389127
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001827
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.420708
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001592
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.283150
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001899
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.595415
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002780
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.582010
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001775
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.444176
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001642
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.666490
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002099
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.409534
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001756
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.418311
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001517
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.282036
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001840
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.606828
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002683
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.597772
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001731
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.439460
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001612
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.659912
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002311
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.392859
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001728
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.431746
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001487
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.271656
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001822
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.610383
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002663
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.573493
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001797
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.432681
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001688
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.668141
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002535
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.398635
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001853
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.441138
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001566
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.288935
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001940
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.627109
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002841
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.580636
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001801
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.423541
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001659
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.704393
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002148
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.399867
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001758
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.442811
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001789
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.311541
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001908
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.679724
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002759
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.610303
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001773
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.462170
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001641
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.710124
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002117
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.451099
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001740
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.454686
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001625
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.298995
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002250
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.621348
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002937
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.578814
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001839
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.427756
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001675
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.678671
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002138
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.397524
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001767
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.416592
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001606
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.305388
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001833
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.642476
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002698
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.573014
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001818
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.440802
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001692
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.681218
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002488
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.397296
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001834
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.426069
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001684
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.275035
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001872
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.625599
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.003005
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.577308
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001778
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.429020
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001664
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.674534
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002153
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.395268
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001752
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.424926
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001527
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.281948
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001854
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.635321
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002802
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.588370
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002078
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.429797
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001699
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.692498
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002332
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.398024
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001849
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.422207
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001563
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.325633
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001873
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.656197
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002721
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.638421
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001756
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.464844
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001639
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.703673
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002119
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.441384
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001756
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.477359
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001574
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.316187
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001842
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.658696
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002790
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.593844
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002156
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.437819
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001817
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.673863
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002154
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.414692
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001797
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.434167
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001577
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.286277
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001870
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.620759
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002752
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.583220
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001805
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.419867
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001705
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.673342
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002110
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.402335
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001762
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.446555
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001525
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.283379
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001893
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.616699
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.003090
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.617774
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001799
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.465506
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001703
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.674580
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002450
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.409532
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001819
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.432072
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001788
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.285054
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001884
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.658198
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002731
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.603107
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001834
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.435334
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001648
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.661363
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002144
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.413865
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001766
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.442101
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001513
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.286288
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001910
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.618236
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002729
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.579246
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001767
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.423041
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001649
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.663702
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002134
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.414234
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001746
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.423262
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001513
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.282380
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001870
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.664468
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002713
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.644829
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002149
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.472600
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001772
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.694218
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002280
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.436983
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001803
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.471378
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001536
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.332907
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001863
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.683204
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002740
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.625193
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001913
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.476688
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001658
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.723260
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002229
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.422823
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002172
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.422977
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001702
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.359545
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001910
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.637563
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002739
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.625063
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001770
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.474041
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001669
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.713841
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002174
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.439402
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001738
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.481684
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001564
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.332298
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001963
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.644515
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.003117
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.582140
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002014
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.430270
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001679
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.675637
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002136
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.420112
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001787
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.449091
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001554
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.326383
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001889
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.675800
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002989
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.635076
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001768
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.476389
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001646
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.717934
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.007694
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.405611
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002245
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.421243
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001617
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.282093
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001999
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.621740
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002755
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.595391
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001753
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.432145
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001640
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.664263
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002112
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.415431
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001725
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.435340
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001542
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.288808
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001828
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.615870
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002716
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.613140
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001785
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.433981
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001631
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.669003
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002121
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.408698
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001828
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.439339
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001735
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.287944
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002189
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.631973
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002894
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.587225
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001935
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.429590
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001693
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.718187
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002107
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.445722
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001734
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.474813
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001539
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.327259
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001860
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.685794
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002746
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.630399
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001731
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.474385
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001685
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.704991
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002163
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.438960
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001728
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.470962
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001523
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.322645
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001849
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.666624
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002828
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.590637
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002129
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.437403
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001634
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.669463
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002280
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.405857
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001914
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.444427
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001522
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.301376
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001889
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.624597
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002741
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.591466
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001778
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.436416
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001647
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.666568
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002112
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.418123
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001744
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.434137
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001520
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.292060
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001950
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.616807
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002816
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.583263
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001795
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.435422
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001679
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.675491
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002156
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.408695
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001751
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.442410
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001516
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.286761
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001900
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.637449
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.003059
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.587722
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001899
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.446415
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001820
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.668288
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002146
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.410643
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001764
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.441812
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001555
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.291119
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001927
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.643447
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002723
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.625656
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001810
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.482353
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001669
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.716601
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002121
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.438839
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001830
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.485903
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001610
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.319310
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001898
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.687582
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002757
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.620565
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001742
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.464846
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001711
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.723000
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002465
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.457218
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001960
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.438946
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001699
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.296322
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001927
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.635871
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002771
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.593613
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001828
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.460098
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001706
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.700479
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002155
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.440993
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001767
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.482738
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.001516
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.331039
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002246
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.617083
+INFO:torch_tensorrt.fx.fx2trt:TRT INetwork construction elapsed time: 0:00:00.002821
+INFO:torch_tensorrt.fx.fx2trt:Build TRT engine elapsed time: 0:00:00.587597
+ERROR:torch_tensorrt.dynamo.backend.backends:FX2TRT conversion failed on the subgraph. See trace above. Returning GraphModule forward instead.
+Traceback (most recent call last):
+  File "/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch_tensorrt/dynamo/backend/backends.py", line 74, in _pretraced_backend
+    trt_compiled = _compile_module(
+  File "/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch_tensorrt/dynamo/backend/backends.py", line 134, in _compile_module
+    trt_mod = convert_module(
+  File "/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch_tensorrt/dynamo/backend/conversion.py", line 34, in convert_module
+    r = interp.run(
+  File "/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch_tensorrt/fx/fx2trt.py", line 204, in run
+    super().run()
+  File "/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/fx/interpreter.py", line 136, in run
+    self.env[node] = self.run_node(node)
+  File "/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch_tensorrt/fx/fx2trt.py", line 275, in run_node
+    trt_node = super().run_node(n)
+  File "/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/fx/interpreter.py", line 177, in run_node
+    return getattr(self, n.op)(n.target, args, kwargs)
+  File "/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch_tensorrt/fx/fx2trt.py", line 328, in call_function
+    return converter(self.network, target, args, kwargs, self._cur_node_name)
+  File "/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch_tensorrt/fx/converters/aten_ops_converters.py", line 133, in aten_ops_convolution
+    return acc_ops_converters.acc_ops_conv1d(
+  File "/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch_tensorrt/fx/converters/acc_ops_converters.py", line 119, in acc_ops_conv1d
+    raise RuntimeError(
+RuntimeError: linear convolution_1 has bias of type <class 'tensorrt_bindings.tensorrt.ITensor'>, Expect Optional[Tensor]
+
+While executing %convolution_1 : [#users=2] = call_function[target=torch.ops.aten.convolution.default](args = (%mul_2, %primals_4, %primals_5, [2], [1], [1], False, [0], 1), kwargs = {_itensor_to_tensor_meta: {<tensorrt_bindings.tensorrt.ITensor object at 0x7f17bd7ed7b0>: ((1, 1280, 3000), torch.float32, False, (3840000, 3000, 1), torch.contiguous_format, False, {}), <tensorrt_bindings.tensorrt.ITensor object at 0x7f17bd7ed130>: ((1, 1280, 3000), torch.float32, False, (3840000, 3000, 1), torch.contiguous_format, False, {}), <tensorrt_bindings.tensorrt.ITensor object at 0x7f17bd7ed230>: ((1, 1280, 3000), torch.float32, False, (3840000, 3000, 1), torch.contiguous_format, False, {}), <tensorrt_bindings.tensorrt.ITensor object at 0x7f17bd7ed530>: ((1, 1280, 3000), torch.float32, False, (3840000, 3000, 1), torch.contiguous_format, False, {}), <tensorrt_bindings.tensorrt.ITensor object at 0x7f17bd7ed6b0>: ((1, 1280, 3000), torch.float32, False, (3840000, 3000, 1), torch.contiguous_format, False, {}), <tensorrt_bindings.tensorrt.ITensor object at 0x7f17bd7edab0>: ((1280, 1280, 3), torch.float32, True, (3840, 3, 1), torch.contiguous_format, False, {}), <tensorrt_bindings.tensorrt.ITensor object at 0x7f17bd7edc70>: ((1280,), torch.float32, True, (1,), torch.contiguous_format, False, {})}})
+Original traceback:
+  File "/home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/transformers/models/whisper/modeling_whisper.py", line 648, in forward
+    inputs_embeds = nn.functional.gelu(self.conv2(inputs_embeds))
+
+[2026-10-24 17:09:49,364] torch._dynamo.output_graph: [INFO] Step 2: done compiler function torch_tensorrt_backend
+Capture range started in the application.
+Generating '/tmp/nsys-report-8ae6.qdstrm'
+Capture range ended in the application.
+[1/1] [0%                          ] nsys.nsys-rep[1/1] [0%                          ] nsys.nsys-rep[1/1] [8%                          ] nsys.nsys-rep[1/1] [=16%                        ] nsys.nsys-rep[1/1] [11%                         ] nsys.nsys-rep[1/1] [8%                          ] nsys.nsys-rep[1/1] [7%                          ] nsys.nsys-rep[1/1] [6%                          ] nsys.nsys-rep[1/1] [5%                          ] nsys.nsys-rep[1/1] [0%                          ] nsys.nsys-rep[1/1] [5%                          ] nsys.nsys-rep[1/1] [7%                          ] nsys.nsys-rep[1/1] [9%                          ] nsys.nsys-rep[1/1] [10%                         ] nsys.nsys-rep[1/1] [12%                         ] nsys.nsys-rep[1/1] [14%                         ] nsys.nsys-rep[1/1] [=16%                        ] nsys.nsys-rep[1/1] [=17%                        ] nsys.nsys-rep[1/1] [==19%                       ] nsys.nsys-rep[1/1] [==21%                       ] nsys.nsys-rep[1/1] [===22%                      ] nsys.nsys-rep[1/1] [===24%                      ] nsys.nsys-rep[1/1] [====26%                     ] nsys.nsys-rep[1/1] [====28%                     ] nsys.nsys-rep[1/1] [=====29%                    ] nsys.nsys-rep[1/1] [=====31%                    ] nsys.nsys-rep[1/1] [======33%                   ] nsys.nsys-rep[1/1] [======35%                   ] nsys.nsys-rep[1/1] [=======36%                  ] nsys.nsys-rep[1/1] [=======38%                  ] nsys.nsys-rep[1/1] [========40%                 ] nsys.nsys-rep[1/1] [========41%                 ] nsys.nsys-rep[1/1] [=========43%                ] nsys.nsys-rep[1/1] [=========45%                ] nsys.nsys-rep[1/1] [==========47%               ] nsys.nsys-rep[1/1] [==========48%               ] nsys.nsys-rep[1/1] [===========50%              ] nsys.nsys-rep[1/1] [===========52%              ] nsys.nsys-rep[1/1] [===========53%              ] nsys.nsys-rep[1/1] [============55%             ] nsys.nsys-rep[1/1] [============57%             ] nsys.nsys-rep[1/1] [=============59%            ] nsys.nsys-rep[1/1] [=============60%            ] nsys.nsys-rep[1/1] [==============62%           ] nsys.nsys-rep[1/1] [==============64%           ] nsys.nsys-rep[1/1] [===============66%          ] nsys.nsys-rep[1/1] [===============67%          ] nsys.nsys-rep[1/1] [================69%         ] nsys.nsys-rep[1/1] [================71%         ] nsys.nsys-rep[1/1] [=================72%        ] nsys.nsys-rep[1/1] [=================74%        ] nsys.nsys-rep[1/1] [==================76%       ] nsys.nsys-rep[1/1] [==================78%       ] nsys.nsys-rep[1/1] [===================79%      ] nsys.nsys-rep[1/1] [===================81%      ] nsys.nsys-rep[1/1] [====================83%     ] nsys.nsys-rep[1/1] [====================84%     ] nsys.nsys-rep[1/1] [=====================86%    ] nsys.nsys-rep[1/1] [=====================88%    ] nsys.nsys-rep[1/1] [======================90%   ] nsys.nsys-rep[1/1] [======================91%   ] nsys.nsys-rep[1/1] [=======================93%  ] nsys.nsys-rep[1/1] [=======================94%  ] nsys.nsys-rep[1/1] [=======================95%  ] nsys.nsys-rep[1/1] [========================100%] nsys.nsys-rep[1/1] [========================100%] nsys.nsys-rep
+[profile] nsys e2e:ko -> benchmark/profiling/torchtrt-fp16
+[profile] torch_compile_torch_tensorrt_enc fp16: 프로파일링 실행이라 results/ 저장 생략
+Generated:
+    /home/klcube/lim/trt_build/benchmark/profiling/torchtrt-fp16/nsys.nsys-rep

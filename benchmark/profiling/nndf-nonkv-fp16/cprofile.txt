@@ -1,0 +1,91 @@
+# e2e:ko: wall 1478.3 ms (cProfile 오버헤드 포함)
+
+## sort by tottime (함수 자체 시간)
+         36685 function calls (36301 primitive calls) in 1.478 seconds
+
+   Ordered by: internal time
+   List reduced from 107 to 30 due to restriction <30>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+      128    1.286    0.010    1.292    0.010 /home/klcube/lim/trt_build/Whisper/trt.py:612(forward)
+      128    0.077    0.001    0.077    0.001 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/transformers/generation_logits_process.py:732(__call__)
+        1    0.047    0.047    0.047    0.047 /home/klcube/lim/trt_build/Whisper/trt.py:208(forward)
+        1    0.031    0.031    1.431    1.431 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/transformers/generation_utils.py:2085(greedy_search)
+      384    0.003    0.000    0.007    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/inspect.py:2124(_signature_from_function)
+      128    0.002    0.000    0.002    0.000 {built-in method torch.argmax}
+      128    0.002    0.000    0.002    0.000 {built-in method torch.cat}
+  768/384    0.002    0.000    0.013    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/inspect.py:2218(_signature_from_callable)
+      768    0.002    0.000    0.003    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/inspect.py:2772(__init__)
+      128    0.002    0.000    0.002    0.000 {built-in method torch.rsub}
+      128    0.002    0.000    0.002    0.000 {method 'long' of 'torch._C._TensorBase' objects}
+      128    0.002    0.000    0.002    0.000 {method 'max' of 'torch._C._TensorBase' objects}
+      129    0.002    0.000    1.341    0.010 /home/klcube/lim/trt_build/archived_models/NNDF/tensorrt_utils.py:430(__call__)
+     1152    0.001    0.000    0.002    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/inspect.py:2489(__init__)
+      646    0.001    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/transformers/configuration_utils.py:251(__getattribute__)
+      129    0.001    0.000    0.001    0.000 {method 'view' of 'torch._C._TensorBase' objects}
+      128    0.001    0.000    0.001    0.000 {method 'mul' of 'torch._C._TensorBase' objects}
+      128    0.001    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/transformers/generation_logits_process.py:718(__call__)
+      384    0.001    0.000    0.003    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/inspect.py:1812(_signature_bound_method)
+      128    0.001    0.000    0.093    0.001 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/transformers/generation_logits_process.py:80(__call__)
+      130    0.001    0.000    0.001    0.000 {method 'flatten' of 'torch._C._TensorBase' objects}
+      128    0.001    0.000    0.002    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/transformers/utils/generic.py:204(__post_init__)
+     1152    0.001    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/transformers/utils/generic.py:267(__setattr__)
+     1152    0.001    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/enum.py:313(__call__)
+      128    0.001    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/dataclasses.py:1022(fields)
+      384    0.000    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/inspect.py:493(unwrap)
+     1536    0.000    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/inspect.py:2821(<genexpr>)
+      128    0.000    0.000    0.004    0.000 <string>:2(__init__)
+     1280    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/dataclasses.py:1037(<genexpr>)
+      384    0.000    0.000    0.013    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/inspect.py:2851(from_callable)
+
+
+
+## sort by cumtime (하위 호출 포함)
+         36685 function calls (36301 primitive calls) in 1.478 seconds
+
+   Ordered by: cumulative time
+   List reduced from 107 to 40 due to restriction <40>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    1.478    1.478 benchmark/nndf_legacy/bench.py:146(gen)
+        1    0.031    0.031    1.431    1.431 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/transformers/generation_utils.py:2085(greedy_search)
+      129    0.002    0.000    1.341    0.010 /home/klcube/lim/trt_build/archived_models/NNDF/tensorrt_utils.py:430(__call__)
+      128    1.286    0.010    1.292    0.010 /home/klcube/lim/trt_build/Whisper/trt.py:612(forward)
+      128    0.001    0.000    0.093    0.001 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/transformers/generation_logits_process.py:80(__call__)
+      128    0.077    0.001    0.077    0.001 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/transformers/generation_logits_process.py:732(__call__)
+        1    0.047    0.047    0.047    0.047 /home/klcube/lim/trt_build/Whisper/trt.py:208(forward)
+      384    0.000    0.000    0.013    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/inspect.py:3103(signature)
+      384    0.000    0.000    0.013    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/inspect.py:2851(from_callable)
+  768/384    0.002    0.000    0.013    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/inspect.py:2218(_signature_from_callable)
+      384    0.003    0.000    0.007    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/inspect.py:2124(_signature_from_function)
+      128    0.000    0.000    0.004    0.000 <string>:2(__init__)
+      384    0.001    0.000    0.003    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/inspect.py:1812(_signature_bound_method)
+      768    0.002    0.000    0.003    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/inspect.py:2772(__init__)
+      128    0.001    0.000    0.002    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/transformers/utils/generic.py:204(__post_init__)
+      128    0.002    0.000    0.002    0.000 {built-in method torch.argmax}
+     1152    0.001    0.000    0.002    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/inspect.py:2489(__init__)
+      128    0.002    0.000    0.002    0.000 {built-in method torch.cat}
+      128    0.000    0.000    0.002    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/_tensor.py:34(wrapped)
+      128    0.000    0.000    0.002    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/torch/_tensor.py:846(__rsub__)
+      128    0.002    0.000    0.002    0.000 {built-in method torch.rsub}
+      128    0.002    0.000    0.002    0.000 {method 'long' of 'torch._C._TensorBase' objects}
+      128    0.002    0.000    0.002    0.000 {method 'max' of 'torch._C._TensorBase' objects}
+      384    0.000    0.000    0.002    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/inspect.py:2865(replace)
+      646    0.001    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/transformers/configuration_utils.py:251(__getattribute__)
+      129    0.001    0.000    0.001    0.000 {method 'view' of 'torch._C._TensorBase' objects}
+      128    0.001    0.000    0.001    0.000 {method 'mul' of 'torch._C._TensorBase' objects}
+      128    0.001    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/dataclasses.py:1022(fields)
+      128    0.001    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/transformers/generation_logits_process.py:718(__call__)
+     1152    0.001    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/transformers/utils/generic.py:267(__setattr__)
+     1152    0.001    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/enum.py:313(__call__)
+      130    0.001    0.000    0.001    0.000 {method 'flatten' of 'torch._C._TensorBase' objects}
+      384    0.000    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/inspect.py:493(unwrap)
+      127    0.000    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/site-packages/transformers/generation_stopping_criteria.py:111(__call__)
+     1536    0.000    0.000    0.001    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/inspect.py:2821(<genexpr>)
+     1280    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trt/lib/python3.8/dataclasses.py:1037(<genexpr>)
+      127    0.000    0.000    0.000    0.000 {built-in method builtins.any}
+      256    0.000    0.000    0.000    0.000 {built-in method builtins.all}
+      128    0.000    0.000    0.000    0.000 /home/klcube/lim/trt_build/Whisper/trt.py:833(prepare_inputs_for_generation)
+      128    0.000    0.000    0.000    0.000 {method 'to' of 'torch._C._TensorBase' objects}
+
+

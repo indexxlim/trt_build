@@ -1,0 +1,2 @@
+[profile] cprofile e2e:ko -> benchmark/profiling/hf-fp16
+[profile] hf_transformers fp16: 프로파일링 실행이라 results/ 저장 생략

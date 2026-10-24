@@ -1,0 +1,20 @@
+# conda create -n trtllm -c conda-forge python=3.12 openmpi mpi4py
+# conda activate trtllm && pip install -r requirements.txt
+# Tested: python 3.12, NVIDIA driver 580 (CUDA 13.0), A100
+#
+# 주의 1) TensorRT-LLM 1.2.1 wheel은 CUDA 13으로 빌드됨 -> torch도 반드시 cu130 빌드여야 한다
+#         (PyPI 기본 torch 2.9.1은 cu128이라 `libcublasLt.so.13` ImportError)
+# 주의 2) CUDA 13 런타임 lib(pip nvidia/cu13/lib)이 검색 경로에 없으면 `libnvrtc.so.13` ImportError
+#         -> $CONDA_PREFIX/etc/conda/activate.d/cu13_libs.sh 에서 LD_LIBRARY_PATH에 추가 (README 참고)
+# 주의 3) pyarrow 18+는 numpy 2를 요구하지만 tensorrt_llm은 numpy 1.26 -> pyarrow<18
+--extra-index-url https://download.pytorch.org/whl/cu130
+--extra-index-url https://pypi.nvidia.com
+torch==2.9.1+cu130
+torchvision==0.24.1+cu130
+tensorrt_llm==1.2.1
+pyarrow<18
+
+# examples/models/core/whisper 실행용
+tiktoken
+openai-whisper
+soundfile

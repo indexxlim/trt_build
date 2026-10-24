@@ -1,0 +1,91 @@
+# e2e:ko: wall 888.4 ms (cProfile 오버헤드 포함)
+
+## sort by tottime (함수 자체 시간)
+         186 function calls in 0.888 seconds
+
+   Ordered by: internal time
+   List reduced from 81 to 30 due to restriction <30>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.885    0.885    0.887    0.887 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/tensorrt_llm/runtime/model_runner_cpp.py:928(_initialize_and_fill_output)
+        3    0.001    0.000    0.001    0.000 {built-in method torch.tensor}
+        1    0.000    0.000    0.888    0.888 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/tensorrt_llm/runtime/model_runner_cpp.py:536(generate)
+        1    0.000    0.000    0.002    0.002 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/tensorrt_llm/runtime/model_runner_cpp.py:1024(_fill_output)
+        1    0.000    0.000    0.888    0.888 /home/klcube/lim/trt_build/benchmark/trtllm/bench.py:47(gen)
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        2    0.000    0.000    0.000    0.000 {method 'unbind' of 'torch._C.TensorBase' objects}
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/_tensor.py:1145(__len__)
+        2    0.000    0.000    0.000    0.000 {built-in method torch._C._cuda_synchronize}
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/_tensor.py:1161(__iter__)
+        1    0.000    0.000    0.000    0.000 {built-in method torch.floor_divide}
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/cuda/__init__.py:1073(synchronize)
+        4    0.000    0.000    0.000    0.000 {built-in method torch._C._get_tracing_state}
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/cuda/_utils.py:344(_get_device_index)
+        3    0.000    0.000    0.000    0.000 <frozen os>:709(__getitem__)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/autograd/grad_mode.py:84(__exit__)
+        3    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/cuda/__init__.py:159(_nvml_based_avail)
+       16    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+        3    0.000    0.000    0.000    0.000 <frozen _collections_abc>:804(get)
+        1    0.000    0.000    0.000    0.000 /home/klcube/lim/trt_build/benchmark/common.py:40(_sync)
+        3    0.000    0.000    0.000    0.000 <frozen os>:808(getenv)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/_utils.py:789(_get_device_attr)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/_utils.py:805(_get_current_device_index)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/utils/_contextlib.py:158(__new__)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/autograd/grad_mode.py:184(__init__)
+        3    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/cuda/__init__.py:163(is_available)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/_utils.py:831(_get_device_index)
+        3    0.000    0.000    0.000    0.000 <frozen os>:791(encode)
+        3    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/cuda/__init__.py:154(_is_compiled)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/cuda/__init__.py:528(__init__)
+
+
+
+## sort by cumtime (하위 호출 포함)
+         186 function calls in 0.888 seconds
+
+   Ordered by: cumulative time
+   List reduced from 81 to 40 due to restriction <40>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.888    0.888 /home/klcube/lim/trt_build/benchmark/trtllm/bench.py:47(gen)
+        1    0.000    0.000    0.888    0.888 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/tensorrt_llm/runtime/model_runner_cpp.py:536(generate)
+        1    0.885    0.885    0.887    0.887 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/tensorrt_llm/runtime/model_runner_cpp.py:928(_initialize_and_fill_output)
+        1    0.000    0.000    0.002    0.002 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/tensorrt_llm/runtime/model_runner_cpp.py:1024(_fill_output)
+        3    0.001    0.000    0.001    0.000 {built-in method torch.tensor}
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/cuda/__init__.py:1073(synchronize)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/cuda/__init__.py:528(__init__)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/cuda/_utils.py:344(_get_device_index)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/_utils.py:831(_get_device_index)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/_utils.py:805(_get_current_device_index)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/_utils.py:789(_get_device_attr)
+        3    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/cuda/__init__.py:163(is_available)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/_utils.py:772(_get_available_device_type)
+       16    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/_tensor.py:1161(__iter__)
+        3    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/cuda/__init__.py:159(_nvml_based_avail)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/_tensor.py:1145(__len__)
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        3    0.000    0.000    0.000    0.000 <frozen os>:808(getenv)
+        2    0.000    0.000    0.000    0.000 {method 'unbind' of 'torch._C.TensorBase' objects}
+        3    0.000    0.000    0.000    0.000 <frozen _collections_abc>:804(get)
+        1    0.000    0.000    0.000    0.000 /home/klcube/lim/trt_build/benchmark/common.py:40(_sync)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/_tensor.py:38(wrapped)
+        3    0.000    0.000    0.000    0.000 <frozen os>:709(__getitem__)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/_tensor.py:1115(__floordiv__)
+        2    0.000    0.000    0.000    0.000 {built-in method torch._C._cuda_synchronize}
+        1    0.000    0.000    0.000    0.000 {built-in method torch.floor_divide}
+        4    0.000    0.000    0.000    0.000 {built-in method torch._C._get_tracing_state}
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/autograd/grad_mode.py:84(__exit__)
+        3    0.000    0.000    0.000    0.000 <frozen os>:791(encode)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/autograd/grad_mode.py:184(__init__)
+        4    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/cuda/__init__.py:382(_lazy_init)
+        3    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/cuda/__init__.py:154(_is_compiled)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/autograd/grad_mode.py:80(__enter__)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/utils/_contextlib.py:158(__new__)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/_utils.py:807(<lambda>)
+        4    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/cuda/__init__.py:333(is_initialized)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/tensorrt_llm/runtime/model_runner_cpp.py:528(gather_context_logits)
+        2    0.000    0.000    0.000    0.000 {built-in method builtins.getattr}
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/trtllm/lib/python3.12/site-packages/torch/cuda/__init__.py:532(__enter__)
+
+

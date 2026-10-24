@@ -1,0 +1,10 @@
+layernorm                          max|x|  max (x-mean)^2  sum_d (x-mean)^2
+layer_norm                          480.8          229774           1029378
+layers.31.final_layer_norm          331.9          109374            457511
+layers.31.self_attn_layer_norm      331.5          109148            456577
+layers.30.final_layer_norm          163.3           26377            107032
+layers.30.self_attn_layer_norm      163.2           26345            106715
+layers.29.final_layer_norm           67.1            4605             18183
+layers.29.self_attn_layer_norm       66.8            4568             18066
+layers.28.final_layer_norm           49.8            2554              9904
+FP16 max = 65504; overflow layers (square / sum): 3 / 5 of 65

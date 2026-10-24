@@ -1,0 +1,14 @@
+WARNING: CPU IP/backtrace sampling not supported, disabling.
+Try the 'nsys status --environment' command to learn more.
+
+WARNING: CPU context switch tracing not supported, disabling.
+Try the 'nsys status --environment' command to learn more.
+
+Capture range started in the application.
+Generating '/tmp/nsys-report-b1db.qdstrm'
+Capture range ended in the application.
+[1/1] [0%                          ] nsys.nsys-rep[1/1] [0%                          ] nsys.nsys-rep[1/1] [8%                          ] nsys.nsys-rep[1/1] [=17%                        ] nsys.nsys-rep[1/1] [12%                         ] nsys.nsys-rep[1/1] [9%                          ] nsys.nsys-rep[1/1] [7%                          ] nsys.nsys-rep[1/1] [6%                          ] nsys.nsys-rep[1/1] [5%                          ] nsys.nsys-rep[1/1] [5%                          ] nsys.nsys-rep[1/1] [8%                          ] nsys.nsys-rep[1/1] [11%                         ] nsys.nsys-rep[1/1] [14%                         ] nsys.nsys-rep[1/1] [=17%                        ] nsys.nsys-rep[1/1] [==20%                       ] nsys.nsys-rep[1/1] [===23%                      ] nsys.nsys-rep[1/1] [====26%                     ] nsys.nsys-rep[1/1] [=====29%                    ] nsys.nsys-rep[1/1] [=====32%                    ] nsys.nsys-rep[1/1] [======35%                   ] nsys.nsys-rep[1/1] [=======39%                  ] nsys.nsys-rep[1/1] [=========43%                ] nsys.nsys-rep[1/1] [==========48%               ] nsys.nsys-rep[1/1] [===========52%              ] nsys.nsys-rep[1/1] [============57%             ] nsys.nsys-rep[1/1] [=============60%            ] nsys.nsys-rep[1/1] [==================75%       ] nsys.nsys-rep[1/1] [========================100%] nsys.nsys-rep[1/1] [========================100%] nsys.nsys-rep
+[profile] nsys e2e:ko -> benchmark/profiling/nndf-nonkv-fp16
+[profile] nndf_trt_nonkv fp16: 프로파일링 실행이라 results/ 저장 생략
+Generated:
+    /home/klcube/lim/trt_build/benchmark/profiling/nndf-nonkv-fp16/nsys.nsys-rep

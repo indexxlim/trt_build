@@ -1,0 +1,7 @@
+# conda create -n ct2 python=3.10 && pip install -r requirements.txt
+# Tested: python 3.10, NVIDIA driver 580, A100
+ctranslate2==4.8.3
+# 변환(ct2-transformers-converter)용 + CUDA 12 cuBLAS/cuDNN 런타임(torch wheel 포함분 사용)
+torch==2.5.1
+transformers==4.57.3  # ctranslate2 4.8 converter가 from_pretrained(dtype=...) 사용 -> 4.56+ 필요
+numpy<2

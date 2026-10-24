@@ -2,3 +2,12 @@
 __pycache__/
 **/temp/
 models
+benchmark/trtllm/assets/*.pt
+benchmark/profiling/*/*.nsys-rep
+benchmark/profiling/*/*.sqlite
+benchmark/profiling/*/*.qdstrm
+benchmark/profiling/*/*.pstats
+benchmark/profiling/*/torchprof_trace.json
+benchmark/profiling/*/*_cuda_gpu_trace.csv
+benchmark/profiling/*/*_nvtx_pushpop_trace.csv
+benchmark/experiments/out/trt_kv_validate/

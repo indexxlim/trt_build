@@ -1,0 +1,84 @@
+# e2e:ko: wall 1462.4 ms (cProfile 오버헤드 포함)
+
+## sort by tottime (함수 자체 시간)
+         56 function calls in 1.462 seconds
+
+   Ordered by: internal time
+   List reduced from 34 to 30 due to restriction <30>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    1.461    1.461    1.461    1.461 /home/klcube/lim/trt_build/benchmark/ct2/bench.py:51(gen)
+        1    0.001    0.001    0.001    0.001 {built-in method torch._C._cuda_synchronize}
+        1    0.000    0.000    0.001    0.001 /home/klcube/lim/trt_build/benchmark/common.py:40(_sync)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/os.py:675(__getitem__)
+        1    0.000    0.000    0.001    0.001 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/cuda/__init__.py:944(synchronize)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/cuda/__init__.py:107(_is_compiled)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/cuda/_utils.py:9(_get_device_index)
+        1    0.000    0.000    0.000    0.000 {built-in method torch._C._cuda_getDevice}
+        2    0.000    0.000    0.000    0.000 {built-in method torch._C._cuda_getDeviceCount}
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/os.py:755(encode)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/cuda/__init__.py:439(__init__)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/cuda/__init__.py:112(_nvml_based_avail)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/cuda/__init__.py:116(is_available)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/_collections_abc.py:821(get)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/os.py:772(getenv)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/_utils.py:747(_get_current_device_index)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/cuda/__init__.py:289(_lazy_init)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/_utils.py:773(_get_device_index)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/_utils.py:733(_get_device_attr)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/cuda/__init__.py:242(is_initialized)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/cuda/__init__.py:938(current_device)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/cuda/__init__.py:446(__exit__)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/cuda/__init__.py:443(__enter__)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/_utils.py:718(_get_available_device_type)
+        1    0.000    0.000    0.000    0.000 {built-in method torch._C._cuda_exchangeDevice}
+        9    0.000    0.000    0.000    0.000 {built-in method builtins.isinstance}
+        2    0.000    0.000    0.000    0.000 {built-in method builtins.hasattr}
+        2    0.000    0.000    0.000    0.000 {built-in method torch._C._cuda_isInBadFork}
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/_utils.py:749(<lambda>)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/_jit_internal.py:103(is_scripting)
+
+
+
+## sort by cumtime (하위 호출 포함)
+         56 function calls in 1.462 seconds
+
+   Ordered by: cumulative time
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    1.461    1.461    1.461    1.461 /home/klcube/lim/trt_build/benchmark/ct2/bench.py:51(gen)
+        1    0.000    0.000    0.001    0.001 /home/klcube/lim/trt_build/benchmark/common.py:40(_sync)
+        1    0.000    0.000    0.001    0.001 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/cuda/__init__.py:944(synchronize)
+        1    0.001    0.001    0.001    0.001 {built-in method torch._C._cuda_synchronize}
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/cuda/__init__.py:116(is_available)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/cuda/__init__.py:439(__init__)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/cuda/_utils.py:9(_get_device_index)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/cuda/__init__.py:112(_nvml_based_avail)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/os.py:772(getenv)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/_utils.py:773(_get_device_index)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/_collections_abc.py:821(get)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/_utils.py:747(_get_current_device_index)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/_utils.py:733(_get_device_attr)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/os.py:675(__getitem__)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/_utils.py:749(<lambda>)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/cuda/__init__.py:938(current_device)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/cuda/__init__.py:107(_is_compiled)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/cuda/__init__.py:289(_lazy_init)
+        1    0.000    0.000    0.000    0.000 {built-in method torch._C._cuda_getDevice}
+        2    0.000    0.000    0.000    0.000 {built-in method torch._C._cuda_getDeviceCount}
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/os.py:755(encode)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/_utils.py:718(_get_available_device_type)
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/cuda/__init__.py:242(is_initialized)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/cuda/__init__.py:443(__enter__)
+        1    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/cuda/__init__.py:446(__exit__)
+        1    0.000    0.000    0.000    0.000 {built-in method torch._C._cuda_exchangeDevice}
+        9    0.000    0.000    0.000    0.000 {built-in method builtins.isinstance}
+        2    0.000    0.000    0.000    0.000 {built-in method builtins.hasattr}
+        2    0.000    0.000    0.000    0.000 {built-in method torch._C._cuda_isInBadFork}
+        2    0.000    0.000    0.000    0.000 /home/klcube/anaconda3/envs/ct2/lib/python3.10/site-packages/torch/_jit_internal.py:103(is_scripting)
+        1    0.000    0.000    0.000    0.000 {method 'lower' of 'str' objects}
+        2    0.000    0.000    0.000    0.000 {method 'encode' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 {built-in method torch._C._cuda_maybeExchangeDevice}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+
+
